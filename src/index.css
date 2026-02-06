@@ -39,3 +39,7 @@
   --sidebar-accent: hsl(215 28% 15%);
   --sidebar-border: hsl(215 28% 20%);
 }
+
+html, body {
+  background-color: var(--background); /* Exemplo: Slate-900 do Tailwind */
+}

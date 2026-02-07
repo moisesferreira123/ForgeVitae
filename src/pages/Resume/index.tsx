@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SectionSidebar from "../../components/SectionsSidebar";
 import { useState } from "react";
 import type { SectionItem } from "../../types/sectionItem";
+import SectionRenderer from "../../components/SectionRenderer";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -27,7 +28,7 @@ const INITIAL_SECTION: SectionItem[] = [
   },
   {
     id: 4,
-    label: 'Formação',
+    label: 'Educação',
     icon: GraduationCap,
   },
 ]
@@ -61,13 +62,25 @@ export default function Resume() {
           onSelectSection={(sectionId: number) => setActivedSectionId(sectionId)}
         />
       </aside>
-      <main className="flex justify-center items-center p-8">
-        <div className="max-w-xl p-8 rounded-2xl space-y-6">
-          
+      <main className="flex-1 justify-center p-8">
+        <div className="max-w-xl p-8 rounded-2xl bg-(--card)/70 border border-white/10 shadow-2xl text-(--foreground)">
+          <SectionRenderer 
+            activedSectionId={activedSectionId}
+          />
         </div>
       </main>
-      <aside>
-
+      <aside className="min-h-screen h-full w-[36.5%] bg-(--muted)/30 border-l border-(--border) p-8">
+      <div className="space-y-4">
+        <div className="flex justify-between items-center text-(--foreground)">
+          <h2 className="font-semibold text-lg">Prévia</h2>
+          <button className="flex justify-center items-center">
+            {/* TODO: Colocar botão de lupa para ver o pdf melhor (Pode implementar depois)*/}
+          </button>
+        </div>
+        <div>
+          {/* TODO: Colocar PDF */}
+        </div>
+      </div>
       </aside>
     </div>
   );

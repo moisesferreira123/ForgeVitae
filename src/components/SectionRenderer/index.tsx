@@ -1,8 +1,8 @@
-import EducationSectionForm from "../sections/EducationSectionForm";
-import ExperienceSectionForm from "../sections/ExperienceSectionForm";
-import ProfileSectionForm from "../sections/ProfileSectionForm";
-import ResumeSectionForm from "../sections/ResumeSectionForm";
-import SkillSectionForm from "../sections/SkillSectionForm";
+import EducationSectionForm from "../sectionsForm/EducationSectionForm";
+import ExperienceSectionForm from "../sectionsForm/ExperienceSectionForm";
+import ProfileSectionForm from "../sectionsForm/ProfileSectionForm";
+import ResumeSectionForm from "../sectionsForm/ResumeSectionForm";
+import SkillSectionForm from "../sectionsForm/SkillSectionForm";
 
 export default function SectionRenderer({activedSectionId} : {activedSectionId: number}) {
   switch (activedSectionId) {

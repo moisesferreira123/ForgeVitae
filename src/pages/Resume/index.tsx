@@ -4,6 +4,9 @@ import SectionSidebar from "../../components/SectionsSidebar";
 import { useState } from "react";
 import type { SectionItem } from "../../types/sectionItem";
 import SectionRenderer from "../../components/SectionRenderer";
+import ResumePreview1 from "../../components/pdf/templates/Template1/ResumePreview1";
+import { PDFViewer } from "@react-pdf/renderer";
+import { ResumePDF1 } from "../../components/pdf/templates/Template1/ResumePDF1";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -37,6 +40,10 @@ export default function Resume() {
   const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
   const [activedSectionId, setActivedSectionId] = useState<number>(0);
 
+  const [resumeData, setResumeData] = useState({
+    profile: { name: 'Moisés Ferreira', email: 'moises@email.com', phone: '(11) 99999-9999', location: 'Parnamirim, RN' },
+  });
+
   return (
     <div className="flex min-h-screen w-full">
       <aside className="min-h-screen h-full w-64 bg-(--sidebar-background) border-r border-(--sidebar-border) p-6">
@@ -69,18 +76,17 @@ export default function Resume() {
           />
         </div>
       </main>
-      <aside className="min-h-screen h-full w-[36.5%] bg-(--muted)/30 border-l border-(--border) p-8">
-      <div className="space-y-4">
+      <aside className="flex flex-col gap-4 min-h-screen h-full w-[36.5%] bg-(--muted)/30 border-l border-(--border) p-8">
         <div className="flex justify-between items-center text-(--foreground)">
           <h2 className="font-semibold text-lg">Prévia</h2>
           <button className="flex justify-center items-center">
             {/* TODO: Colocar botão de lupa para ver o pdf melhor (Pode implementar depois)*/}
           </button>
         </div>
-        <div>
-          {/* TODO: Colocar PDF */}
-        </div>
-      </div>
+        <PDFViewer style={{ width: '100%', height: 'calc(297mm*0.46)' }}>
+          <ResumePDF1 />
+        </PDFViewer>
+        <ResumePreview1 />
       </aside>
     </div>
   );

@@ -1,7 +1,9 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-// import Email from "../../../../../assets/email";
+import type { ResumeData } from "../../../types/resumeData";
+import Profile from "./components/Profile";
 
-export default function ResumePreview1() {
+export default function ResumePreview1({data} : {data: ResumeData}) {
+  const sections = data.sections;
+  
   return (
     <div className="h-[calc(297mm*0.46)] flex justify-center ">
       {/* Container de Escala para caber na Aside */}
@@ -11,36 +13,7 @@ export default function ResumePreview1() {
         <div className="bg-white w-[210mm] h-[297mm] p-[15mm] text-[#141414] font-sans flex flex-col leading-tight space-y-4">
           
           {/* HEADER */}
-          <header className="text-center ">
-            <h1 className="text-3xl font-bold mb-2">Moisés Ferreira</h1>
-            <div className="flex justify-center items-center gap-x-3 flex-wrap text-[10pt]">
-              <div className="flex items-center gap-1">
-                <Phone size={12} className="fill-current" />
-                <span>(84) 99152-2678</span>
-              </div>
-              <span className="text-gray-400">|</span>
-              <div className="flex items-center gap-1">
-                <Mail size={12} className="fill-current" />
-                <span>moises.ferreira.118@ufrn.edu.br</span>
-              </div>
-              <span className="text-gray-400">|</span>
-              <div className="flex items-center gap-1">
-                <MapPin size={12} className="fill-current" />
-                <span>Parnamirim, RN</span>
-              </div>
-            </div>
-            <div className="flex justify-center items-center gap-x-3 mt-1 text-[10pt]">
-              <div className="flex items-center gap-1">
-                {/* <Github size={12} /> */}
-                <span className="underline italic">github.com/moisesferreira123</span>
-              </div>
-              <span className="text-gray-400">|</span>
-              <div className="flex items-center gap-1">
-                {/* <Linkedin size={12} /> */}
-                <span className="underline italic">linkedin.com/in/moises-ferreira-099278334</span>
-              </div>
-            </div>
-          </header>
+          <Profile data={sections['profile']} />
 
           {/* HABILIDADES */}
           <section className="">
@@ -66,7 +39,7 @@ export default function ResumePreview1() {
               {/* Projeto 1 */}
               <div>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-[10pt] font-bold">Typing Speed Test | <span className="font-normal">React, Node, Prisma, TiDB, Tailwind CSS</span></span>
+                  <span className="text-[10pt] font-bold">Typing Speed Test <span className="font-normal">| React, Node, Prisma, TiDB, Tailwind CSS</span></span>
                   <span className="text-[9pt] italic">Front | Back | Live Site</span>
                 </div>
                 <p className="text-[10pt] mt-1 mb-1 italic">Aplicação web de teste de velocidade de digitação com métricas em tempo real e ranking global.</p>
@@ -80,7 +53,7 @@ export default function ResumePreview1() {
               {/* Projeto 2 */}
               <div>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-[10pt] font-bold">Tic-Tac-Toe | <span className="font-normal">JavaScript, HTML, Tailwind CSS</span></span>
+                  <span className="text-[10pt] font-bold">Tic-Tac-Toe <span className="font-normal">| JavaScript, HTML, Tailwind CSS</span></span>
                   <span className="text-[9pt] italic">GitHub | Live Site</span>
                 </div>
                 <p className="text-[10pt] mt-1 mb-1 italic">Jogo da Velha com algoritmo Minimax (AI Imbatível).</p>

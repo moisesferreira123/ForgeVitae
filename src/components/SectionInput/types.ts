@@ -6,4 +6,7 @@ export interface InputItem {
   placeholder: string,
   icon: LucideIcon,
   label: string,
+  isMovable: boolean,
+  position: number,
+  // onChangeInput: (newValue: string) => void
 }

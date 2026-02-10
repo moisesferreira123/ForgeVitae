@@ -1,12 +1,13 @@
+import type { ResumeData } from "../../pdf/types/resumeData";
 import EducationSectionForm from "../sectionsForm/EducationSectionForm";
 import ExperienceSectionForm from "../sectionsForm/ExperienceSectionForm";
 import ProfileSectionForm from "../sectionsForm/ProfileSectionForm";
 import ResumeSectionForm from "../sectionsForm/ResumeSectionForm";
 import SkillSectionForm from "../sectionsForm/SkillSectionForm";
 
-export default function SectionRenderer({activedSectionId} : {activedSectionId: number}) {
+export default function SectionRenderer({activedSectionId, data} : {activedSectionId: number, data: ResumeData}) {
   switch (activedSectionId) {
-    case 0: return <ProfileSectionForm />
+    case 0: return <ProfileSectionForm data={data} />
     case 1: return <ResumeSectionForm />
     case 2: return <SkillSectionForm />
     case 3: return <ExperienceSectionForm />

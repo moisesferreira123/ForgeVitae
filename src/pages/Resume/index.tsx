@@ -4,9 +4,10 @@ import SectionSidebar from "../../components/SectionsSidebar";
 import { useState } from "react";
 import type { SectionItem } from "../../types/sectionItem";
 import SectionRenderer from "../../components/SectionRenderer";
-import ResumePreview1 from "../../components/pdf/templates/Template1/ResumePreview1";
+import ResumePreview1 from "../../pdf/templates/Template1/ResumePreview1";
 import { PDFViewer } from "@react-pdf/renderer";
-import { ResumePDF1 } from "../../components/pdf/templates/Template1/ResumePDF1";
+import { ResumePDF1 } from "../../pdf/templates/Template1/ResumePDF1";
+import type { ResumeData } from "../../pdf/types/resumeData";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -40,9 +41,25 @@ export default function Resume() {
   const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
   const [activedSectionId, setActivedSectionId] = useState<number>(0);
 
-  const [resumeData, setResumeData] = useState({
-    profile: { name: 'Moisés Ferreira', email: 'moises@email.com', phone: '(11) 99999-9999', location: 'Parnamirim, RN' },
-  });
+  const [resumeData, setResumeData] = useState<ResumeData>({
+    sections: {
+      'profile':  {
+          name: 'Moisés Ferreira',
+          fields: {
+            'email': {
+              value: 'moises@email.com',
+            },
+            'phone': {
+              value: '(11) 99999-9999',
+            },
+            'location': {
+              value: 'Parnamirim, RN',
+            }
+          }
+        }
+      }
+    }
+  );
 
   return (
     <div className="flex min-h-screen w-full">
@@ -73,6 +90,7 @@ export default function Resume() {
         <div className="max-w-xl p-8 rounded-2xl bg-(--card)/70 border border-white/10 shadow-2xl text-(--foreground)">
           <SectionRenderer 
             activedSectionId={activedSectionId}
+            data={resumeData}
           />
         </div>
       </main>
@@ -83,10 +101,10 @@ export default function Resume() {
             {/* TODO: Colocar botão de lupa para ver o pdf melhor (Pode implementar depois)*/}
           </button>
         </div>
-        <PDFViewer style={{ width: '100%', height: 'calc(297mm*0.46)' }}>
+        {/* <PDFViewer style={{ width: '100%', height: 'calc(297mm*0.46)' }}>
           <ResumePDF1 />
-        </PDFViewer>
-        <ResumePreview1 />
+        </PDFViewer> */}
+        <ResumePreview1 data={resumeData} />
       </aside>
     </div>
   );

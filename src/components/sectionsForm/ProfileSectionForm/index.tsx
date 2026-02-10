@@ -8,7 +8,7 @@ import type { ResumeData } from "../../../pdf/types/resumeData";
 const movableProfileInformationsInitial = [
   {
     id: "phone",
-    type: "type",
+    type: "tel",
     placeholder: "(99)99999-9999",
     icon: Phone,
     label: "Telefone",
@@ -16,7 +16,7 @@ const movableProfileInformationsInitial = [
   },
   {
     id: "email",
-    type: "type",
+    type: "email",
     placeholder: "moises@email.com",
     icon: Mail,
     label: "Email",
@@ -24,7 +24,7 @@ const movableProfileInformationsInitial = [
   },
   {
     id: "location",
-    type: "type",
+    type: "text",
     placeholder: "São Paulo, SP",
     icon: MapPin,
     label: "Localização",
@@ -32,7 +32,7 @@ const movableProfileInformationsInitial = [
   },
 ];
 
-export default function ProfileSectionForm({data} : {data:ResumeData}) {
+export default function ProfileSectionForm({data, onFieldChange} : {data:ResumeData, onFieldChange: (newResumeData: ResumeData) => void}) {
   const [movableProfileInformations, setMovableProfileInformations] = useState(movableProfileInformationsInitial);
   const [profileData, setProfileData] = useState(data);
   
@@ -46,8 +46,11 @@ export default function ProfileSectionForm({data} : {data:ResumeData}) {
     setMovableProfileInformations(resultList);
   }
 
-  function onChangeInput() {
-    
+  function onChangeInput(newValue: string, field: string) {
+    const newProfileData = {...profileData};
+    newProfileData.sections['profile'].fields[field].value = newValue;
+    setProfileData(newProfileData);
+    onFieldChange(newProfileData);
   }
 
   return (
@@ -59,13 +62,14 @@ export default function ProfileSectionForm({data} : {data:ResumeData}) {
       <div className="space-y-5">
         <SectionInput 
           id="name"
-          type="type"
+          type="text"
           placeholder="Moisés Ferreira"
           icon={User}
           label="Nome e Sobrenome"
           isMovable={false}
           position={0}
-          onChange={}
+          value={profileData.sections['profile'].fields["name"].value}
+          onChangeInput={(newValue: string, field: string) => onChangeInput(newValue, field)}
         />
         <div>
           <DragDropContext onDragEnd={reorder} >
@@ -86,6 +90,8 @@ export default function ProfileSectionForm({data} : {data:ResumeData}) {
                       label={item.label}
                       isMovable={item.isMovable}
                       position={index}
+                      value={profileData.sections['profile'].fields[item.id].value}
+                      onChangeInput={(newValue: string, field: string) => onChangeInput(newValue, field)}
                     />
                   ))}
                   {provided.placeholder}

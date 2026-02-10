@@ -8,6 +8,9 @@ import ResumePreview1 from "../../pdf/templates/Template1/ResumePreview1";
 import { PDFViewer } from "@react-pdf/renderer";
 import { ResumePDF1 } from "../../pdf/templates/Template1/ResumePDF1";
 import type { ResumeData } from "../../pdf/types/resumeData";
+import Email from "../../assets/Email";
+import Phone from "../../assets/Phone";
+import MapPin from "../../assets/MapPin";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -44,16 +47,21 @@ export default function Resume() {
   const [resumeData, setResumeData] = useState<ResumeData>({
     sections: {
       'profile':  {
-          name: 'Moisés Ferreira',
           fields: {
+            'name' : {
+              value: '',
+            },
             'email': {
-              value: 'moises@email.com',
+              value: '',
+              icon: Email
             },
             'phone': {
-              value: '(11) 99999-9999',
+              value: '',
+              icon: Phone
             },
             'location': {
-              value: 'Parnamirim, RN',
+              value: '',
+              icon: MapPin
             }
           }
         }
@@ -91,6 +99,7 @@ export default function Resume() {
           <SectionRenderer 
             activedSectionId={activedSectionId}
             data={resumeData}
+            onFieldChange={(newResumeData) => setResumeData(newResumeData)}
           />
         </div>
       </main>

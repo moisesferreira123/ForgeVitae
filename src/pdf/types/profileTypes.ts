@@ -1,10 +1,10 @@
+import type React from "react";
+
 export interface ProfileField {
   value: string;
-  // Trocar por interface que retorna os ícones
-  icon?: string;
+  icon?: React.ElementType;
 }
 
 export interface ProfileSection {
-  name: string;
   fields: Record<string, ProfileField>;
 }

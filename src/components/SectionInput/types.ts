@@ -8,5 +8,6 @@ export interface InputItem {
   label: string,
   isMovable: boolean,
   position: number,
-  // onChangeInput: (newValue: string) => void
+  value: string,
+  onChangeInput: (newValue: string, field: string) => void
 }

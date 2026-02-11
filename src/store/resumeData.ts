@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ProfileSection } from "../pdf/types/profileTypes";
+import type { ProfileField, ProfileSection } from "../pdf/types/profileTypes";
 import Email from "../assets/Email";
 import Phone from "../assets/Phone";
 import MapPin from "../assets/MapPin";
@@ -13,6 +13,13 @@ type sectionsResumeData = Record<string, ResumeSection>;
 interface ResumeData {
   sections: sectionsResumeData;
   updateResumeData: (newResumeData: sectionsResumeData) => void;
+  addProfileField: (newFieldName: string, newProfileField: ProfileField) => void;
+}
+
+interface ProfileFieldKeys {
+  keys: string[];
+  updateProfileFieldKeys: (newKeys: string[]) => void;
+  addProfileFieldKey: (newKey: string) => void;
 }
 
 export const useResumeData = create<ResumeData>((set) => ({
@@ -39,5 +46,23 @@ export const useResumeData = create<ResumeData>((set) => ({
   },
   updateResumeData: (newResumeData) => set(() => ({
     sections: {...newResumeData}
+  })),
+  addProfileField: (newFieldName, newProfileField) => set((state) => {
+    const newResumeData : sectionsResumeData = {...state.sections};
+    newResumeData['profile'].fields = {...state.sections['profile'].fields, [newFieldName]: newProfileField};
+
+    return {
+      sections: {...newResumeData}
+    }
+  })
+}))
+
+export const useProdileFieldKeys = create<ProfileFieldKeys>((set) => ({
+  keys: ['name', 'phone', 'email', 'location'],
+  updateProfileFieldKeys: (newKeys) => set(() => ({
+    keys: [...newKeys]
+  })),
+  addProfileFieldKey: (newKey) => set((state) => ({
+    keys: [...state.keys, newKey]
   }))
 }))

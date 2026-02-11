@@ -1,16 +1,15 @@
-import { Mail, MapPin, Phone, User } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import SectionInput from "../../SectionInput";
 import { useState } from "react";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
-import type { ResumeData } from "../../../pdf/types/resumeData";
+import { useProdileFieldKeys, useResumeData } from "../../../store/resumeData";
+import { Plus } from "lucide-react";
 
 const movableProfileInformationsInitial = [
   {
     id: "phone",
     type: "tel",
     placeholder: "(99)99999-9999",
-    icon: Phone,
     label: "Telefone",
     isMovable: true
   },
@@ -18,7 +17,6 @@ const movableProfileInformationsInitial = [
     id: "email",
     type: "email",
     placeholder: "moises@email.com",
-    icon: Mail,
     label: "Email",
     isMovable: true
   },
@@ -26,15 +24,15 @@ const movableProfileInformationsInitial = [
     id: "location",
     type: "text",
     placeholder: "São Paulo, SP",
-    icon: MapPin,
     label: "Localização",
     isMovable: true
   },
 ];
 
-export default function ProfileSectionForm({data, onFieldChange} : {data:ResumeData, onFieldChange: (newResumeData: ResumeData) => void}) {
+export default function ProfileSectionForm() {
   const [movableProfileInformations, setMovableProfileInformations] = useState(movableProfileInformationsInitial);
-  const [profileData, setProfileData] = useState(data);
+  const resumeData = useResumeData();
+  const profileFieldKeys = useProdileFieldKeys();
   
   function reorder(result: DropResult) {
     if(!result.destination) return;
@@ -43,14 +41,18 @@ export default function ProfileSectionForm({data, onFieldChange} : {data:ResumeD
     const [reorderedItem] = resultList.splice(result.source.index, 1);
     resultList.splice(result.destination.index, 0, reorderedItem);
 
+    const newKeys = [...profileFieldKeys.keys];
+    const [reorderedKeys] = newKeys.splice(result.source.index+1, 1);
+    newKeys.splice(result.destination.index+1, 0, reorderedKeys);
+
     setMovableProfileInformations(resultList);
+    profileFieldKeys.updateProfileFieldKeys(newKeys);
   }
 
   function onChangeInput(newValue: string, field: string) {
-    const newProfileData = {...profileData};
-    newProfileData.sections['profile'].fields[field].value = newValue;
-    setProfileData(newProfileData);
-    onFieldChange(newProfileData);
+    const newProfileData = {...resumeData.sections};
+    newProfileData['profile'].fields[field].value = newValue;
+    resumeData.updateResumeData(newProfileData);
   }
 
   return (
@@ -64,11 +66,10 @@ export default function ProfileSectionForm({data, onFieldChange} : {data:ResumeD
           id="name"
           type="text"
           placeholder="Moisés Ferreira"
-          icon={User}
           label="Nome e Sobrenome"
           isMovable={false}
           position={0}
-          value={profileData.sections['profile'].fields["name"].value}
+          value={resumeData.sections['profile'].fields["name"].value}
           onChangeInput={(newValue: string, field: string) => onChangeInput(newValue, field)}
         />
         <div>
@@ -86,11 +87,10 @@ export default function ProfileSectionForm({data, onFieldChange} : {data:ResumeD
                       id={item.id}
                       type={item.type}
                       placeholder={item.placeholder}
-                      icon={item.icon}
                       label={item.label}
                       isMovable={item.isMovable}
                       position={index}
-                      value={profileData.sections['profile'].fields[item.id].value}
+                      value={resumeData.sections['profile'].fields[item.id].value}
                       onChangeInput={(newValue: string, field: string) => onChangeInput(newValue, field)}
                     />
                   ))}
@@ -101,6 +101,10 @@ export default function ProfileSectionForm({data, onFieldChange} : {data:ResumeD
           </DragDropContext>
         </div>
       </div>
+      <button className="w-full flex justify-center items-center text-(--primary) font-medium text-sm gap-2 py-2.5 transition-colors duration-300 border-2 border-dashed border-(--primary)/30 rounded-lg bg-(--background) mt-8 hover:bg-(--primary)/5 hover:border-(--primary)/50 hover:text-(--foreground) cursor-pointer">
+        <Plus size={16} />
+        <span>Adicionar informações</span>
+      </button>
     </div>
   );
 }

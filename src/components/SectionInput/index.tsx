@@ -3,7 +3,7 @@ import type { InputItem } from "./types";
 import { Draggable } from "@hello-pangea/dnd";
 import React from "react";
 
-export default function SectionInput({id, type, placeholder, icon: Icon, label, isMovable, position, value, onChangeInput} : InputItem) {
+export default function SectionInput({id, type, placeholder, label, isMovable, position, value, onChangeInput} : InputItem) {
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>, field: string) {
     const newValue = event.target.value;
@@ -13,7 +13,6 @@ export default function SectionInput({id, type, placeholder, icon: Icon, label, 
   if(!isMovable) return (
     <div className="space-y-2">
       <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
-        <Icon className="text-(--primary)" size={16} />
         <span>{label}</span>
       </label>
       <input 
@@ -36,7 +35,6 @@ export default function SectionInput({id, type, placeholder, icon: Icon, label, 
           className="space-y-2"
         >
           <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
-            <Icon className="text-(--primary)" size={16} />
             <span>{label}</span>
           </label>
           <div className="flex gap-1">

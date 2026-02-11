@@ -7,10 +7,6 @@ import SectionRenderer from "../../components/SectionRenderer";
 import ResumePreview1 from "../../pdf/templates/Template1/ResumePreview1";
 import { PDFViewer } from "@react-pdf/renderer";
 import { ResumePDF1 } from "../../pdf/templates/Template1/ResumePDF1";
-import type { ResumeData } from "../../pdf/types/resumeData";
-import Email from "../../assets/Email";
-import Phone from "../../assets/Phone";
-import MapPin from "../../assets/MapPin";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -40,38 +36,9 @@ const INITIAL_SECTION: SectionItem[] = [
   },
 ]
 
-const resumeDataInitial = {
-  sections: {
-    'profile':  {
-        fields: {
-          'name' : {
-            value: '',
-          },
-          'email': {
-            value: '',
-            icon: Email
-          },
-          'phone': {
-            value: '',
-            icon: Phone
-          },
-          'location': {
-            value: '',
-            icon: MapPin
-          }
-        }
-      }
-    }
-  }
-
-  const dataKeyInitial = ['name', 'phone', 'email', 'location']
-
 export default function Resume() {
   const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
   const [activedSectionId, setActivedSectionId] = useState<number>(0);
-
-  const [resumeData, setResumeData] = useState<ResumeData>(resumeDataInitial);
-  const [dataKey, setDataKey] = useState(dataKeyInitial);
 
   return (
     <div className="flex min-h-screen w-full">
@@ -102,8 +69,6 @@ export default function Resume() {
         <div className="max-w-xl p-8 rounded-2xl bg-(--card)/70 border border-white/10 shadow-2xl text-(--foreground)">
           <SectionRenderer 
             activedSectionId={activedSectionId}
-            data={resumeData}
-            onFieldChange={(newResumeData) => setResumeData(newResumeData)}
           />
         </div>
       </main>
@@ -117,9 +82,7 @@ export default function Resume() {
         {/* <PDFViewer style={{ width: '100%', height: 'calc(297mm*0.46)' }}>
           <ResumePDF1 />
         </PDFViewer> */}
-        <ResumePreview1 
-          data={resumeData} 
-        />
+        <ResumePreview1 />
       </aside>
     </div>
   );

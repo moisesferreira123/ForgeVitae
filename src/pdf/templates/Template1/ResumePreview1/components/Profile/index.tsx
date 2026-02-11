@@ -11,7 +11,7 @@ export default function Profile({data} : {data: ProfileSection}) {
           const Icon: React.ElementType | undefined = profileField.icon;
 
           return (
-            <div key={fieldName} className="flex items-center gap-1">
+            <div key={fieldName} className="flex items-center gap-1 border-r-2 border-black/60 pr-3 last:border-none last:pr-0">
               {Icon && <Icon />}
               <span>{profileField.value}</span>
             </div>

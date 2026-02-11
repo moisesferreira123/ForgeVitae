@@ -13,7 +13,7 @@ export default function ResumePreview1({data} : {data: ResumeData}) {
         <div className="bg-white w-[210mm] h-[297mm] p-[15mm] text-[#141414] font-sans flex flex-col leading-tight space-y-4">
           
           {/* HEADER */}
-          <Profile data={sections['profile']} />
+          <Profile data={sections['profile']}  />
 
           {/* HABILIDADES */}
           <section className="">

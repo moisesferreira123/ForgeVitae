@@ -40,34 +40,38 @@ const INITIAL_SECTION: SectionItem[] = [
   },
 ]
 
-export default function Resume() {
-  const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
-  const [activedSectionId, setActivedSectionId] = useState<number>(0);
-
-  const [resumeData, setResumeData] = useState<ResumeData>({
-    sections: {
-      'profile':  {
-          fields: {
-            'name' : {
-              value: '',
-            },
-            'email': {
-              value: '',
-              icon: Email
-            },
-            'phone': {
-              value: '',
-              icon: Phone
-            },
-            'location': {
-              value: '',
-              icon: MapPin
-            }
+const resumeDataInitial = {
+  sections: {
+    'profile':  {
+        fields: {
+          'name' : {
+            value: '',
+          },
+          'email': {
+            value: '',
+            icon: Email
+          },
+          'phone': {
+            value: '',
+            icon: Phone
+          },
+          'location': {
+            value: '',
+            icon: MapPin
           }
         }
       }
     }
-  );
+  }
+
+  const dataKeyInitial = ['name', 'phone', 'email', 'location']
+
+export default function Resume() {
+  const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
+  const [activedSectionId, setActivedSectionId] = useState<number>(0);
+
+  const [resumeData, setResumeData] = useState<ResumeData>(resumeDataInitial);
+  const [dataKey, setDataKey] = useState(dataKeyInitial);
 
   return (
     <div className="flex min-h-screen w-full">
@@ -113,7 +117,9 @@ export default function Resume() {
         {/* <PDFViewer style={{ width: '100%', height: 'calc(297mm*0.46)' }}>
           <ResumePDF1 />
         </PDFViewer> */}
-        <ResumePreview1 data={resumeData} />
+        <ResumePreview1 
+          data={resumeData} 
+        />
       </aside>
     </div>
   );

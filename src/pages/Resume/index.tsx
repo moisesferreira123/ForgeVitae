@@ -8,6 +8,7 @@ import ResumePreview1 from "../../pdf/templates/Template1/ResumePreview1";
 import { PDFViewer } from "@react-pdf/renderer";
 import { ResumePDF1 } from "../../pdf/templates/Template1/ResumePDF1";
 import AddProfileInfoModal from "../../components/modals/AddProfileInfoModal";
+import { useAddProfileInfoModal } from "../../store/modalStore";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -40,10 +41,11 @@ const INITIAL_SECTION: SectionItem[] = [
 export default function Resume() {
   const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
   const [activedSectionId, setActivedSectionId] = useState<number>(0);
+  const isAddProfileInfoModalOpen = useAddProfileInfoModal().isOpen;
 
   return (
     <div className="flex min-h-screen w-full">
-      <AddProfileInfoModal />
+      {isAddProfileInfoModalOpen && <AddProfileInfoModal />}
       <aside className="min-h-screen h-full w-64 bg-(--sidebar-background) border-r border-(--sidebar-border) p-6">
         <Link
           to={'/'}

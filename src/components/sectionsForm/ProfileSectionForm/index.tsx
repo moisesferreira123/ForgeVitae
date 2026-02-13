@@ -5,11 +5,13 @@ import { useResumeData } from "../../../store/resumeData";
 import { Plus } from "lucide-react";
 import { useProdileFieldKeys } from "../../../store/profileFieldsKeys";
 import { profileFieldsInput } from "../../../constants/allProfileFieldsInput";
+import { useAddProfileInfoModal } from "../../../store/modalStore";
 
 export default function ProfileSectionForm() {
   const resumeData = useResumeData();
   const profileFieldKeys = useProdileFieldKeys();
   const profileFields = {...profileFieldsInput};
+  const modal = useAddProfileInfoModal();
   
   function reorder(result: DropResult) {
     if(!result.destination) return;
@@ -60,7 +62,10 @@ export default function ProfileSectionForm() {
           </DragDropContext>
         </div>
       </div>
-      <button className="w-full flex justify-center items-center text-(--primary) font-medium text-sm gap-2 py-2.5 transition-colors duration-300 border-2 border-dashed border-(--primary)/30 rounded-lg bg-(--background) mt-8 hover:bg-(--primary)/5 hover:border-(--primary)/50 hover:text-(--foreground) cursor-pointer">
+      <button
+        onClick={() => modal.updateModal()}
+        className="w-full flex justify-center items-center text-(--primary) font-medium text-sm gap-2 py-2.5 transition-colors duration-200 border-2 border-dashed border-(--primary)/30 rounded-lg bg-(--background) mt-8 hover:bg-(--primary)/5 hover:border-(--primary)/50 hover:text-(--foreground) cursor-pointer"
+      >
         <Plus size={16} />
         <span>Adicionar informações</span>
       </button>

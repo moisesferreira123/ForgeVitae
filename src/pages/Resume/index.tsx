@@ -7,6 +7,7 @@ import SectionRenderer from "../../components/SectionRenderer";
 import ResumePreview1 from "../../pdf/templates/Template1/ResumePreview1";
 import { PDFViewer } from "@react-pdf/renderer";
 import { ResumePDF1 } from "../../pdf/templates/Template1/ResumePDF1";
+import AddProfileInfoModal from "../../components/modals/AddProfileInfoModal";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -42,6 +43,7 @@ export default function Resume() {
 
   return (
     <div className="flex min-h-screen w-full">
+      <AddProfileInfoModal />
       <aside className="min-h-screen h-full w-64 bg-(--sidebar-background) border-r border-(--sidebar-border) p-6">
         <Link
           to={'/'}

@@ -1,4 +1,5 @@
-import { useProdileFieldKeys, useResumeData,  } from "../../../../../../store/resumeData";
+import { useProdileFieldKeys } from "../../../../../../store/profileFieldsKeys";
+import { useResumeData,  } from "../../../../../../store/resumeData";
 import type React from "react";
 
 export default function Profile() {

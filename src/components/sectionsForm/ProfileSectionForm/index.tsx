@@ -1,51 +1,23 @@
 import HeaderForm from "../../HeaderForm";
 import SectionInput from "../../SectionInput";
-import { useState } from "react";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
-import { useProdileFieldKeys, useResumeData } from "../../../store/resumeData";
+import { useResumeData } from "../../../store/resumeData";
 import { Plus } from "lucide-react";
-
-const movableProfileInformationsInitial = [
-  {
-    id: "phone",
-    type: "tel",
-    placeholder: "(99)99999-9999",
-    label: "Telefone",
-    isMovable: true
-  },
-  {
-    id: "email",
-    type: "email",
-    placeholder: "moises@email.com",
-    label: "Email",
-    isMovable: true
-  },
-  {
-    id: "location",
-    type: "text",
-    placeholder: "São Paulo, SP",
-    label: "Localização",
-    isMovable: true
-  },
-];
+import { useProdileFieldKeys } from "../../../store/profileFieldsKeys";
+import { profileFieldsInput } from "../../../constants/allProfileFieldsInput";
 
 export default function ProfileSectionForm() {
-  const [movableProfileInformations, setMovableProfileInformations] = useState(movableProfileInformationsInitial);
   const resumeData = useResumeData();
   const profileFieldKeys = useProdileFieldKeys();
+  const profileFields = {...profileFieldsInput};
   
   function reorder(result: DropResult) {
     if(!result.destination) return;
 
-    const resultList = Array.from(movableProfileInformations);
-    const [reorderedItem] = resultList.splice(result.source.index, 1);
-    resultList.splice(result.destination.index, 0, reorderedItem);
-
     const newKeys = [...profileFieldKeys.keys];
-    const [reorderedKeys] = newKeys.splice(result.source.index+1, 1);
-    newKeys.splice(result.destination.index+1, 0, reorderedKeys);
+    const [reorderedKeys] = newKeys.splice(result.source.index, 1);
+    newKeys.splice(result.destination.index, 0, reorderedKeys);
 
-    setMovableProfileInformations(resultList);
     profileFieldKeys.updateProfileFieldKeys(newKeys);
   }
 
@@ -62,16 +34,6 @@ export default function ProfileSectionForm() {
         subtitle="Preencha seus dados de contato"
       />
       <div className="space-y-5">
-        <SectionInput 
-          id="name"
-          type="text"
-          placeholder="Moisés Ferreira"
-          label="Nome e Sobrenome"
-          isMovable={false}
-          position={0}
-          value={resumeData.sections['profile'].fields["name"].value}
-          onChangeInput={(newValue: string, field: string) => onChangeInput(newValue, field)}
-        />
         <div>
           <DragDropContext onDragEnd={reorder} >
             <Droppable droppableId="inputProfile" type="list" direction="vertical" >
@@ -81,16 +43,13 @@ export default function ProfileSectionForm() {
                   {...provided.droppableProps}
                   className="flex flex-col  gap-5"
                 >
-                  {movableProfileInformations.map((item, index) => (
+                  {profileFieldKeys.keys.map((item, index) => (
                     <SectionInput
-                      key={item.id}
-                      id={item.id}
-                      type={item.type}
-                      placeholder={item.placeholder}
-                      label={item.label}
-                      isMovable={item.isMovable}
+                      key={item}
+                      id={item}
+                      profileInfoInput={profileFields[item]}
                       position={index}
-                      value={resumeData.sections['profile'].fields[item.id].value}
+                      value={resumeData.sections['profile'].fields[item].value}
                       onChangeInput={(newValue: string, field: string) => onChangeInput(newValue, field)}
                     />
                   ))}

@@ -1,9 +1,8 @@
+import type { profileInfoInput } from "../../constants/allProfileFieldsInput"
+
 export interface InputItem {
   id: string,
-  type: string,
-  placeholder: string,
-  label: string,
-  isMovable: boolean,
+  profileInfoInput: profileInfoInput
   position: number,
   value: string,
   onChangeInput: (newValue: string, field: string) => void

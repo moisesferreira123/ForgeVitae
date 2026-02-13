@@ -3,22 +3,22 @@ import type { InputItem } from "./types";
 import { Draggable } from "@hello-pangea/dnd";
 import React from "react";
 
-export default function SectionInput({id, type, placeholder, label, isMovable, position, value, onChangeInput} : InputItem) {
+export default function SectionInput({id, profileInfoInput, position, value, onChangeInput} : InputItem) {
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>, field: string) {
     const newValue = event.target.value;
     onChangeInput(newValue, field);
   }
   
-  if(!isMovable) return (
+  if(!profileInfoInput.isDraggable) return (
     <div className="space-y-2">
       <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
-        <span>{label}</span>
+        <span>{profileInfoInput.label}</span>
       </label>
       <input 
         id={id}
-        type={type} 
-        placeholder={placeholder} 
+        type={profileInfoInput.type} 
+        placeholder={profileInfoInput.placeholder} 
         value={value}
         onChange={(event) => onChange(event, id)}
         className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none"
@@ -35,13 +35,13 @@ export default function SectionInput({id, type, placeholder, label, isMovable, p
           className="space-y-2"
         >
           <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
-            <span>{label}</span>
+            <span>{profileInfoInput.label}</span>
           </label>
           <div className="flex gap-1">
             <input 
               id={id}
-              type={type} 
-              placeholder={placeholder} 
+              type={profileInfoInput.type} 
+              placeholder={profileInfoInput.placeholder} 
               value={value}
               onChange={(event) => onChange(event, id)}
               className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none"

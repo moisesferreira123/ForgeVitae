@@ -8,25 +8,33 @@ import Linkedin from "../assets/Linkedin";
 export const profileFields : Record<string, ProfileField> = {
   'name' : {
     value: '',
+    label: 'Nome'
   },
   'email': {
     value: '',
+    label: 'Email',
     icon: Email
   },
   'phone': {
     value: '',
+    label: 'Telefone',
     icon: Phone
   },
   'location': {
     value: '',
+    label: 'Localização',
     icon: MapPin
   },
   'github': {
     value: '',
-    icon: GitHub
+    label: 'GitHub',
+    icon: GitHub,
+    link: ''
   },
   'linkedin' : {
     value: '',
-    icon: Linkedin
+    label: 'LinkedIn',
+    icon: Linkedin,
+    link: ''
   }
 }

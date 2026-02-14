@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ProfileField, ProfileSection } from "../pdf/types/profileTypes";
+import type { ProfileSection } from "../pdf/types/profileTypes";
 import { profileFields } from "../constants/allProfileFields";
 
 type ResumeSection = 
@@ -11,7 +11,6 @@ type sectionsResumeData = Record<string, ResumeSection>;
 interface ResumeData {
   sections: sectionsResumeData;
   updateResumeData: (newResumeData: sectionsResumeData) => void;
-  addProfileField: (newFieldName: string, newProfileField: ProfileField) => void;
 }
 
 export const useResumeData = create<ResumeData>((set) => {
@@ -24,15 +23,7 @@ export const useResumeData = create<ResumeData>((set) => {
       },
       updateResumeData: (newResumeData) => set(() => ({
         sections: {...newResumeData}
-      })),
-      addProfileField: (newFieldName, newProfileField) => set((state) => {
-        const newResumeData : sectionsResumeData = {...state.sections};
-        newResumeData['profile'].fields = {...state.sections['profile'].fields, [newFieldName]: newProfileField};
-
-        return {
-          sections: {...newResumeData}
-        }
-      })
+      }))
     }
   )
 })

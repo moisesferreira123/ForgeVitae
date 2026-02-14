@@ -44,7 +44,7 @@ export default function Resume() {
   const isAddProfileInfoModalOpen = useAddProfileInfoModal().isOpen;
 
   return (
-    <div className="flex min-h-screen w-full">
+    <div className="flex h-screen w-full overflow-hidden">
       {isAddProfileInfoModalOpen && <AddProfileInfoModal />}
       <aside className="min-h-screen h-full w-64 bg-(--sidebar-background) border-r border-(--sidebar-border) p-6">
         <Link
@@ -69,7 +69,7 @@ export default function Resume() {
           onSelectSection={(sectionId: number) => setActivedSectionId(sectionId)}
         />
       </aside>
-      <main className="flex-1 justify-center p-8">
+      <main className="flex-1 justify-center p-8 overflow-y-auto no-scrollbar">
         <div className="max-w-xl p-8 rounded-2xl bg-(--card)/70 border border-white/10 shadow-2xl text-(--foreground)">
           <SectionRenderer 
             activedSectionId={activedSectionId}

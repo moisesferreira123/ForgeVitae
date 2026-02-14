@@ -1,29 +1,55 @@
-import { ArrowDownUp, Trash2 } from "lucide-react";
+import { ArrowDownUp, Link, Trash2 } from "lucide-react";
 import type { InputItem } from "./types";
 import { Draggable } from "@hello-pangea/dnd";
 import React from "react";
 import { useProdileFieldKeys } from "../../store/profileFieldsKeys";
+import { useLinkModal } from "../../store/modalStore";
+import LinkModal from "../modals/LinkModal";
 
 export default function SectionInput({id, profileInfoInput, position, value, onChangeInput} : InputItem) {
   const profileFieldKeys = useProdileFieldKeys();
+  const linkModal = useLinkModal();
+  // TODO: Apagar o link ao remover input (Para isso, vou tirar o resumeData do ProfileSectionForm e colocar aqui)
+  // TODO: Fazer o modal do link sumir ao clicar fora dele
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>, field: string) {
     const newValue = event.target.value;
     onChangeInput(newValue, field);
   }
+
+  function removeInput() {
+    onChangeInput('', id);
+    profileFieldKeys.removeProfileFieldKey(id);
+  }
+
+  function openModal() {
+    if(linkModal.updateIdModal) linkModal.updateIdModal(id);
+    linkModal.updateModal();
+  }
   
   if(!profileInfoInput.isDraggable) return (
     <div className="space-y-2">
-      <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
-        <span>{profileInfoInput.label}</span>
-      </label>
+      <div className="flex justify-between items-center">
+            <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
+              <span>{profileInfoInput.label}</span>
+            </label>
+            {profileInfoInput.isRemovable && 
+            <button
+              onClick={removeInput}
+              className="flex justify-center items-center gap-1.5 text-(--destructive) hover:text-red-500 cursor-pointer"
+            >
+              <Trash2 size={12} />
+              <span className="text-xs">Remover</span>
+            </button>
+            }
+          </div>
       <input 
         id={id}
         type={profileInfoInput.type} 
         placeholder={profileInfoInput.placeholder} 
         value={value}
         onChange={(event) => onChange(event, id)}
-        className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none"
+        className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none placeholder:text-(--muted-foreground) "
       />
     </div>
   );
@@ -42,7 +68,7 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
             </label>
             {profileInfoInput.isRemovable && 
             <button
-              onClick={() => profileFieldKeys.removeProfileFieldKey(id)}
+              onClick={removeInput}
               className="flex justify-center items-center gap-1.5 text-(--destructive) hover:text-red-500 cursor-pointer"
             >
               <Trash2 size={12} />
@@ -51,17 +77,30 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
             }
           </div>
           <div className="flex gap-1">
-            <input 
-              id={id}
-              type={profileInfoInput.type} 
-              placeholder={profileInfoInput.placeholder} 
-              value={value}
-              onChange={(event) => onChange(event, id)}
-              className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none"
-            />
+            <div className="w-full relative flex items-center">
+              <input 
+                id={id}
+                type={profileInfoInput.type} 
+                placeholder={profileInfoInput.placeholder} 
+                value={value}
+                onChange={(event) => onChange(event, id)}
+                className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none placeholder:text-(--muted-foreground) "
+              />
+              {profileInfoInput.isLinkable &&
+                <button 
+                  onClick={openModal}
+                  className="absolute right-2 h-6 px-2 rounded-md bg-(--muted) border border-(--border) cursor-pointer hover:text-(--primary)"
+                >
+                  <Link size={16} />
+                </button>
+              }
+              {linkModal.isOpen && linkModal.id === id && 
+                <LinkModal linkId={id} linkName={profileInfoInput.label} />
+              }
+            </div>
             <div 
               {...provided.dragHandleProps}
-              className="flex justify-center items-center w-11 h-10 rounded-lg bg-(--background) border border-(--input) cursor-grab hover:border-(--primary)"
+              className="flex justify-center items-center w-11 h-10 rounded-lg bg-(--background) border border-(--input) cursor-grab hover:border-(--primary) hover:text-(--primary)"
             >
               <ArrowDownUp size={20} />
             </div> 

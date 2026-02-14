@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useAddProfileInfoModal } from "../../../store/modalStore";
 
 export default function AddProfileInfoModal() {
-  const allProfileFieldKeys = Object.keys(profileFields);
-  const notVisibleKeys = allProfileFieldKeys.filter(key => !useProdileFieldKeys.getState().keys.includes(key));
+  const notVisibleFields = Object.entries(profileFields).filter(([key, ]) => !useProdileFieldKeys.getState().keys.includes(key));
   const [profileInfoClicked, setProfileInfoClicked] = useState<string[]>([]);
   const modal = useAddProfileInfoModal();
   const profileFieldsKeys = useProdileFieldKeys();
@@ -41,13 +40,13 @@ export default function AddProfileInfoModal() {
             <p className="text-sm text-(--muted-foreground)">Selecione os campos que deseja adicionar</p>
           </div>
           <div className="py-4 space-x-2 space-y-2 overflow-y-auto flex-1">
-            {notVisibleKeys.map(item => (
+            {notVisibleFields.map(([key, profileField]) => (
               <button 
-                onClick={() => addInfoKey(item)}
-                className={`inline-flex items-center gap-1 py-2 px-3 rounded-xl border-2 ${profileInfoClicked.includes(item) ? 'border-(--primary) text-(--primary) bg-(--primary)/10' : 'border-(--border) text-(--muted-foreground) hover:bg-(--popover)'} cursor-pointer transition-colors duration-200`}
+                onClick={() => addInfoKey(key)}
+                className={`inline-flex items-center gap-1 py-2 px-3 rounded-xl border-2 ${profileInfoClicked.includes(key) ? 'border-(--primary) text-(--primary) bg-(--primary)/10' : 'border-(--border) text-(--muted-foreground) hover:bg-(--popover)'} cursor-pointer transition-colors duration-200`}
               >
                 <Plus size={18} />
-                <span className="text-sm font-medium">{item}</span>
+                <span className="text-sm font-medium">{profileField.label}</span>
               </button>
             ))}
           </div>

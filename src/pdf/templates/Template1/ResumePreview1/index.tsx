@@ -2,7 +2,7 @@ import Profile from "./components/Profile";
 
 export default function ResumePreview1() {
   return (
-    <div className="h-[calc(297mm*0.46)] flex justify-center ">
+    <div className="h-[calc(297mm*0.46)] flex justify-center overflow-y-auto overflow-x-hidden">
       {/* Container de Escala para caber na Aside */}
       <div className="origin-top scale-[0.46] shadow-2xl transition-transform duration-300">
         

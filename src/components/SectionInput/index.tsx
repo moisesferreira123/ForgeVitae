@@ -5,12 +5,12 @@ import React from "react";
 import { useProdileFieldKeys } from "../../store/profileFieldsKeys";
 import { useLinkModal } from "../../store/modalStore";
 import LinkModal from "../modals/LinkModal";
+import { useResumeData } from "../../store/resumeData";
 
 export default function SectionInput({id, profileInfoInput, position, value, onChangeInput} : InputItem) {
   const profileFieldKeys = useProdileFieldKeys();
   const linkModal = useLinkModal();
-  // TODO: Apagar o link ao remover input (Para isso, vou tirar o resumeData do ProfileSectionForm e colocar aqui)
-  // TODO: Fazer o modal do link sumir ao clicar fora dele
+  const resumeData = useResumeData();
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>, field: string) {
     const newValue = event.target.value;
@@ -19,6 +19,12 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
 
   function removeInput() {
     onChangeInput('', id);
+    const link = resumeData.sections['profile'].fields[id].link;
+    if(link) {
+      const newResumeData = {...resumeData};
+      newResumeData.sections['profile'].fields[id].link = '';
+      resumeData.updateResumeData(newResumeData.sections);
+    }
     profileFieldKeys.removeProfileFieldKey(id);
   }
 

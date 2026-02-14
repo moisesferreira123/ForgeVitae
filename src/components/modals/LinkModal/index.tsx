@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLinkModal } from "../../../store/modalStore";
 import { useResumeData } from "../../../store/resumeData";
 
@@ -7,11 +7,12 @@ export default function LinkModal({linkId, linkName} : {linkId: string, linkName
   const linkModal = useLinkModal();
   const resumeData = useResumeData();
   const [link, setLink] = useState(resumeData.sections['profile'].fields[linkId].link);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   function save(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if(!link) return;
+    if(link === undefined) return;
 
     let url = link;
     if(!(/^https?:\/\//i.test(url))) {
@@ -23,11 +24,28 @@ export default function LinkModal({linkId, linkName} : {linkId: string, linkName
     resumeData.updateResumeData(newResumeData.sections);
     linkModal.updateModal();
   }
+
+  useEffect(() => {
+    function handleCLickOutside(event: MouseEvent) {
+      if(modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        linkModal.updateModal();
+      }
+    }
+
+    if(linkModal.isOpen) {
+      document.addEventListener('mousedown', handleCLickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleCLickOutside);
+    }
+  }, [linkModal]);
   
   return (
     <div
       role="dialog"
       aria-modal="true"
+      ref={modalRef}
       className="absolute z-20 right-0 bottom-11 p-3 bg-(--popover) border border-(--primary)/20 rounded-lg w-75"
     >
       <form 

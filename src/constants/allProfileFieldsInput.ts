@@ -55,5 +55,13 @@ export const profileFieldsInput : Record<string, profileInfoInput> = {
     isDraggable: true,
     isRemovable: true,
     isLinkable: true
+  },
+  'website' : {
+    type: "text",
+    placeholder: "exemplo.com",
+    label: "Website",
+    isDraggable: true,
+    isRemovable: true,
+    isLinkable: true
   }
 }

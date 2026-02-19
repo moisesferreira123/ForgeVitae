@@ -33,7 +33,7 @@ export default function ProfileSectionForm() {
     <div className="space-y-6">
       <HeaderForm 
         title="Informações Pessoais"
-        subtitle="Preencha seus dados de contato"
+        subtitle="Preencha seus dados pessoais"
       />
       <div className="space-y-5">
         <div>

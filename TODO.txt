@@ -1,0 +1,2 @@
+TODO: Ajeitar a tecla TAB, para que não saia do editor
+TODO: Fazer os botões de link da parte do formulário de perfil fecharem o modal de link ao invés de reabrí-los (usar useRef(Record de refs))

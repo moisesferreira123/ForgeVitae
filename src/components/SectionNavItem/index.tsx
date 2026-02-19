@@ -6,7 +6,7 @@ export default function SectionNavItem( {sectionItem, isActive, onSelectSection}
   return (
     <button
       onClick={() => onSelectSection(id)}
-      className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 cursor-pointer ${isActive ? 'bg-(--primary) text-(--foreground) shadow-(--shadow-glow)' : 'text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)'}`}
+      className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 cursor-pointer ${isActive ? 'bg-(--primary) text-(--foreground) ' : 'text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)'}`}
     >
       <div className={`w-8 h-8 rounded-full flex justify-center items-center ${isActive ? 'bg-(--foreground)/20' : 'bg-(--muted)'}`}>
         <Icon size={16} />

@@ -95,7 +95,7 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
               {profileInfoInput.isLinkable &&
                 <button 
                   onClick={openModal}
-                  className="absolute right-2 h-6 px-2 rounded-md bg-(--muted) border border-(--border) cursor-pointer hover:text-(--primary)"
+                  className="link absolute right-2 h-6 px-2 rounded-md bg-(--muted) border border-(--border) cursor-pointer hover:text-(--primary)"
                 >
                   <Link size={16} />
                 </button>

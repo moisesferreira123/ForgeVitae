@@ -4,6 +4,7 @@ import Phone from "../assets/Phone";
 import MapPin from "../assets/MapPin";
 import GitHub from "../assets/GitHub";
 import Linkedin from "../assets/Linkedin";
+import Website from "../assets/Website";
 
 export const profileFields : Record<string, ProfileField> = {
   'name' : {
@@ -35,6 +36,12 @@ export const profileFields : Record<string, ProfileField> = {
     value: '',
     label: 'LinkedIn',
     icon: Linkedin,
+    link: ''
+  },
+  'website' : {
+    value: '',
+    label: 'Website',
+    icon: Website,
     link: ''
   }
 }

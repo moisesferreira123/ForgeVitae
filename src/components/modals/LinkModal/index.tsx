@@ -15,7 +15,8 @@ export default function LinkModal({linkId, linkName} : {linkId: string, linkName
     if(link === undefined) return;
 
     let url = link;
-    if(!(/^https?:\/\//i.test(url))) {
+
+    if(url !== '' && !(/^https?:\/\//i.test(url))) {
       url = `https://${url}`;
     }
 

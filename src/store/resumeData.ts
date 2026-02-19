@@ -19,7 +19,8 @@ export const useResumeData = create<ResumeData>((set) => {
       sections: {
         'profile':  {
           fields: {...profileFields}
-        }
+        },
+        
       },
       updateResumeData: (newResumeData) => set(() => ({
         sections: {...newResumeData}

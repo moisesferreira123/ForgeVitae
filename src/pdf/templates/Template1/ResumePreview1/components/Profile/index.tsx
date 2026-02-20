@@ -1,9 +1,10 @@
 import { useProdileFieldKeys } from "../../../../../../store/profileFieldsKeys";
 import { useResumeData,  } from "../../../../../../store/resumeData";
 import type React from "react";
+import type { ProfileSection } from "../../../../../types/profileTypes";
 
 export default function Profile() {
-  const data = useResumeData().sections['profile'];
+  const data = useResumeData().sections['profile'] as ProfileSection;
   const { keys } = useProdileFieldKeys();
 
   return (

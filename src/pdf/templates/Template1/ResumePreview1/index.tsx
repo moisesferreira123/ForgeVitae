@@ -1,4 +1,5 @@
 import Profile from "./components/Profile";
+import Summary from "./components/Summary";
 
 export default function ResumePreview1() {
   return (
@@ -11,6 +12,8 @@ export default function ResumePreview1() {
           
           {/* HEADER */}
           <Profile />
+          {/* RESUMO */}
+          <Summary />
 
           {/* HABILIDADES */}
           <section className="">

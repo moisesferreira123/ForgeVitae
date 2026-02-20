@@ -6,6 +6,7 @@ import { useProdileFieldKeys } from "../../store/profileFieldsKeys";
 import { useLinkModal } from "../../store/modalStore";
 import LinkModal from "../modals/LinkModal";
 import { useResumeData } from "../../store/resumeData";
+import type { ProfileSection } from "../../pdf/types/profileTypes";
 
 export default function SectionInput({id, profileInfoInput, position, value, onChangeInput} : InputItem) {
   const profileFieldKeys = useProdileFieldKeys();
@@ -19,11 +20,12 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
 
   function removeInput() {
     onChangeInput('', id);
-    const link = resumeData.sections['profile'].fields[id].link;
+    const data = resumeData.sections['profile'] as ProfileSection;
+    const link = data.fields[id].link;
     if(link) {
-      const newResumeData = {...resumeData};
-      newResumeData.sections['profile'].fields[id].link = '';
-      resumeData.updateResumeData(newResumeData.sections);
+      const newProfileData = {...resumeData.sections['profile'] as ProfileSection};
+      newProfileData.fields[id].link = '';
+      resumeData.updateResumeData(newProfileData);
     }
     profileFieldKeys.removeProfileFieldKey(id);
   }

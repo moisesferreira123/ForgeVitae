@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 import { useProdileFieldKeys } from "../../../store/profileFieldsKeys";
 import { profileFieldsInput } from "../../../constants/allProfileFieldsInput";
 import { useAddProfileInfoModal } from "../../../store/modalStore";
+import type { ProfileSection } from "../../../pdf/types/profileTypes";
 
 export default function ProfileSectionForm() {
   const resumeData = useResumeData();
@@ -24,8 +25,8 @@ export default function ProfileSectionForm() {
   }
 
   function onChangeInput(newValue: string, field: string) {
-    const newProfileData = {...resumeData.sections};
-    newProfileData['profile'].fields[field].value = newValue;
+    const newProfileData = {...resumeData.sections['profile'] as ProfileSection};
+    newProfileData.fields[field].value = newValue;
     resumeData.updateResumeData(newProfileData);
   }
 
@@ -51,7 +52,7 @@ export default function ProfileSectionForm() {
                       id={item}
                       profileInfoInput={profileFields[item]}
                       position={index}
-                      value={resumeData.sections['profile'].fields[item].value}
+                      value={(resumeData.sections['profile'] as ProfileSection).fields[item].value}
                       onChangeInput={(newValue: string, field: string) => onChangeInput(newValue, field)}
                     />
                   ))}

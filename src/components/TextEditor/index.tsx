@@ -3,8 +3,14 @@ import StarterKit from "@tiptap/starter-kit";
 import MenuBar from "./MenuBar";
 import TextAlign from "@tiptap/extension-text-align";
 import { Placeholder } from "@tiptap/extensions";
+import { useResumeData } from "../../store/resumeData";
+import type { SummarySection } from "../../pdf/types/summaryTypes";
+import { useRef } from "react";
 
 export default function TextEditor({placeholder} : {placeholder: string}) {
+  const resumeData = useResumeData();
+  const saveTimeoutRef = useRef<number|null>(null);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -34,7 +40,20 @@ export default function TextEditor({placeholder} : {placeholder: string}) {
     },
     shouldRerenderOnTransaction: true,
     immediatelyRender: true,
-    content: ''
+    onUpdate: ({editor}) => {
+      const html = editor.getHTML();
+
+      console.log(html)
+
+      clearTimeout(saveTimeoutRef.current === null ? undefined : saveTimeoutRef.current);
+      saveTimeoutRef.current = setTimeout(() => {
+        resumeData.updateResumeData({
+          type: 'summary',
+          content: html
+        })
+      }, 500)
+    },
+    content: (resumeData.sections['summary'] as SummarySection).content
   })
 
   

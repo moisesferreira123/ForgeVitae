@@ -55,7 +55,7 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
         placeholder={profileInfoInput.placeholder} 
         value={value}
         onChange={(event) => onChange(event, id)}
-        className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none placeholder:text-(--muted-foreground) "
+        className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none "
       />
     </div>
   );
@@ -90,7 +90,7 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
                 placeholder={profileInfoInput.placeholder} 
                 value={value}
                 onChange={(event) => onChange(event, id)}
-                className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none placeholder:text-(--muted-foreground) "
+                className="flex w-full h-10 text-sm px-3 py-2 rounded-lg bg-(--background) border border-(--input) focus:border-(--primary) focus:outline-none "
               />
               {profileInfoInput.isLinkable &&
                 <button 

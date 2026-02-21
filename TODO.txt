@@ -1,2 +1,3 @@
 TODO: Fazer os botões de link da parte do formulário de perfil fecharem o modal de link ao invés de reabrí-los (usar useRef(Record de refs))
 TODO: Colocar o botão de visualizar o currículo em tela cheia
+TODO: Colocar uma caixa de texto em cima dos botões do editor de texto para mostrar os key shortcuts

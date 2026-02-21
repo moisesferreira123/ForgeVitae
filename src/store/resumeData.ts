@@ -2,10 +2,12 @@ import { create } from "zustand";
 import type { ProfileSection } from "../pdf/types/profileTypes";
 import { profileFields } from "../constants/allProfileFields";
 import type { SummarySection } from "../pdf/types/summaryTypes";
+import type { ObjectiveSection } from "../pdf/types/objectiveTypes";
 
 type ResumeSection = 
   ProfileSection |
-  SummarySection;
+  SummarySection |
+  ObjectiveSection;
 
 type sectionsResumeData = Record<string, ResumeSection>;
 
@@ -25,6 +27,10 @@ export const useResumeData = create<ResumeData>((set) => {
         'summary': {
           type: 'summary',
           content: ''
+        },
+        'objective': {
+          type: 'objective',
+          content: ''
         }
       },
       updateResumeData: (newSectionData) => set((state) => {
@@ -43,6 +49,13 @@ export const useResumeData = create<ResumeData>((set) => {
                 'summary': {...newSectionData}
               }
             }
+            case 'objective':
+              return {
+                sections: {
+                  ...state.sections,
+                  'objective': {...newSectionData}
+                }
+              }
           default:
             return state;
         }

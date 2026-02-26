@@ -8,6 +8,6 @@ export interface ProfileField {
 }
 
 export interface ProfileSection {
-  type: string
+  type: string;
   fields: Record<string, ProfileField>;
 }

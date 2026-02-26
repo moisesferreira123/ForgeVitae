@@ -19,10 +19,10 @@ export default function ObjectiveSectionForm() {
       <HeaderForm 
         title="Objetivo"
         subtitle="Apresente seu objetivo profissional de forma objetiva"
+        Icon={Target}
       />
       <div className="space-y-2">
-        <label htmlFor="summary" className="flex items-center gap-2 text-sm font-medium text-(--primary)">
-          <Target size={16} />
+        <label htmlFor="objective" className="flex items-center gap-2 text-sm font-medium pl-1">
           <span className="text-(--foreground)">Seu Objetivo</span>
         </label>
         <TextEditor 

@@ -1,3 +1,4 @@
+import { GraduationCap } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 
 export default function EducationSectionForm() {
@@ -6,6 +7,7 @@ export default function EducationSectionForm() {
       <HeaderForm 
         title="Educação"
         subtitle="Adicione suas formações acadêmicas"
+        Icon={GraduationCap}
       />
     </div>
   );

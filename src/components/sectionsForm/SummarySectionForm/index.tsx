@@ -1,4 +1,4 @@
-import { FileText } from "lucide-react";
+import {FileText } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import TextEditor from "../../TextEditor";
 import { useResumeData } from "../../../store/resumeData";
@@ -19,10 +19,10 @@ export default function SummarySectionForm() {
       <HeaderForm 
         title="Resumo"
         subtitle="Escreva um breve resumo sobre sua trajetória, habilidades principais e resultados relevantes"
+        Icon={FileText}
       />
       <div className="space-y-2">
-        <label htmlFor="summary" className="flex items-center gap-2 text-sm font-medium text-(--primary)">
-          <FileText size={16} />
+        <label htmlFor="summary" className="flex items-center gap-2 text-sm font-medium pl-1">
           <span className="text-(--foreground)">Seu Resumo</span>
         </label>
         <TextEditor 

@@ -2,7 +2,7 @@ import HeaderForm from "../../HeaderForm";
 import SectionInput from "../../SectionInput";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 import { useResumeData } from "../../../store/resumeData";
-import { Plus } from "lucide-react";
+import { Plus, User } from "lucide-react";
 import { useProdileFieldKeys } from "../../../store/profileFieldsKeys";
 import { profileFieldsInput } from "../../../constants/allProfileFieldsInput";
 import { useAddProfileInfoModal } from "../../../store/modalStore";
@@ -35,6 +35,7 @@ export default function ProfileSectionForm() {
       <HeaderForm 
         title="Informações Pessoais"
         subtitle="Preencha seus dados pessoais"
+        Icon={User}
       />
       <div className="space-y-5">
         <div>

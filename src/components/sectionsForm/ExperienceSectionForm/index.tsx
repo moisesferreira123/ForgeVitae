@@ -1,3 +1,4 @@
+import { BriefcaseBusiness } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 
 export default function ExperienceSectionForm() {
@@ -6,6 +7,7 @@ export default function ExperienceSectionForm() {
       <HeaderForm 
         title="Experiência Profissional"
         subtitle="Adicione suas experiências de trabalho"
+        Icon={BriefcaseBusiness}
       />
     </div>
   );

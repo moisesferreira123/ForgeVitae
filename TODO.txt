@@ -1,3 +1,4 @@
 TODO: Fazer os botões de link da parte do formulário de perfil fecharem o modal de link ao invés de reabrí-los (usar useRef(Record de refs))
 TODO: Colocar o botão de visualizar o currículo em tela cheia
 TODO: Colocar uma caixa de texto em cima dos botões do editor de texto para mostrar os key shortcuts
+TODO: Vou ter que colocar depois para as seções nos resumeData iniciarem com os valores presentes no banco de dados ou localStorage.

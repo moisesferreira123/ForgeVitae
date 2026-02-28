@@ -3,18 +3,18 @@ import StarterKit from "@tiptap/starter-kit";
 import SimplifiedMenuBar from "./SimplifiedMenuBar";
 import TextAlign from "@tiptap/extension-text-align";
 import { Placeholder } from "@tiptap/extensions";
-// import { useRef } from "react";
+import { useEffect } from "react";
 
 interface TextEditorProps {
+  editorKey: number
   placeholder: string;
   minHeight: number;
   updateData: (html: string) => void;
-  addSkill: () => void
+  handleConfirmation: () => void
   initialContent: string
 }
 
-export default function SimplifiedTextEditor({placeholder, minHeight, updateData, addSkill, initialContent} : TextEditorProps) {
-
+export default function SkillTextEditor({editorKey, placeholder, minHeight, updateData, handleConfirmation, initialContent} : TextEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -35,7 +35,7 @@ export default function SimplifiedTextEditor({placeholder, minHeight, updateData
           event.preventDefault()
           const htmlContent = view.state.doc.textContent.trim();
           if(htmlContent.length > 0) {
-            addSkill();
+            handleConfirmation();
             editor.commands.clearContent();
           }
           return true;
@@ -52,6 +52,9 @@ export default function SimplifiedTextEditor({placeholder, minHeight, updateData
     content: initialContent
   })
 
+  useEffect(() => {
+    editor.commands.clearContent();
+  }, [editorKey, editor])
   
   return (
     <div className="w-full rounded-lg border border-(--input)">

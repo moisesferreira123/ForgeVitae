@@ -1,10 +1,10 @@
-import { Brain, GripVertical, Plus, Trash2 } from "lucide-react";
+import { Brain, Plus } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import SkillTextEditor from "../../TextEditor/SkillTextEditor";
 import { useResumeData } from "../../../store/resumeData";
 import React, { useState } from "react";
-import type { Skill, SkillSection } from "../../../pdf/types/skillTypes";
-import ComponentHTML from "../../ComponentHTML";
+import type { Skill, SkillSection } from "../../../pdf/types/skillTypes"; 
+import SkillComp from "./Skill";
 
 export default function SkillSectionForm() {
   const resumeData = useResumeData();
@@ -43,19 +43,33 @@ export default function SkillSectionForm() {
     setSkills(filteredSkills);
   }
 
+  function updateSkill(idSkill: number, newContent: string) {
+    const updatedSkills = (resumeData.sections['skills'] as SkillSection).skills.map(sk => (
+      sk.id === idSkill ? {...sk, content: newContent} : sk
+    ));
+
+    resumeData.updateResumeData({
+      type: 'skills',
+      skills: updatedSkills
+    })
+
+    setSkills(updatedSkills);
+    setIdUpdateSkill(null);
+  }
+
   function openUpdateEditor(id: number) {
     if(idUpdateSkill && idUpdateSkill === id) setIdUpdateSkill(null);
-    setIdUpdateSkill(id);
+    else setIdUpdateSkill(id);
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       <HeaderForm
         title="Habilidades"
         subtitle="Adicione suas principais competências"
         Icon={Brain}
       />
-      <div className="p-5 rounded-xl bg-(--card)/50 border border-(--border) space-y-4 w-full text-(--foreground)">
+      <div className="p-5 rounded-xl bg-(--card) border border-(--border) space-y-4 w-full text-(--foreground) transition-transform duration-300 hover:scale-102">
         <div className="flex flex-col gap-2">
           <label htmlFor="skill" className="text-sm font-medium leading-none pl-1">Habilidade</label>
           <SkillTextEditor
@@ -79,28 +93,14 @@ export default function SkillSectionForm() {
       {skills.length !== 0 && 
         <div className="space-y-2">
           {skills.map((skill, index) => (
-            <div 
+            <SkillComp
               key={index}
-              role="button"
-              tabIndex={0}
-              onClick={() => openUpdateEditor(skill.id)}
-              className="flex items-center gap-2 p-3 rounded-lg bg-(--card)/30 border border-(--border) cursor-pointer"
-            >
-              <div 
-                className="flex flex-none z-10 justify-center items-center w-8 h-8 cursor-grab rounded-md hover:bg-(--muted)"
-              >
-                <GripVertical size={22} />
-              </div>
-              <div className="flex-1 truncate">
-                <ComponentHTML HTMLstring={skill.content} />
-              </div>
-              <button
-                onClick={(e) => removeSkill(e, skill.id)}
-                className="flex flex-none z-10 justify-center items-center w-8 h-8 cursor-pointer rounded-md text-(--destructive) hover:bg-red-400/20"
-              >
-                <Trash2 size={20} />
-              </button>
-            </div>
+              skill={skill}
+              openUpdateEditor={openUpdateEditor}
+              removeSkill={removeSkill}
+              updateSkill={(idSkill, newContent) => updateSkill(idSkill, newContent)}
+              isEditorOpen={idUpdateSkill === skill.id}
+            />
           ))}
         </div>
       }

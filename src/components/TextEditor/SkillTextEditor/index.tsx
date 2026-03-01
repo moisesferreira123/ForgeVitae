@@ -53,13 +53,13 @@ export default function SkillTextEditor({editorKey, placeholder, minHeight, upda
   })
 
   useEffect(() => {
-    editor.commands.clearContent();
+    if(editorKey !== 0) editor.commands.clearContent();
   }, [editorKey, editor])
   
   return (
     <div className="w-full rounded-lg border border-(--input)">
       <SimplifiedMenuBar editor={editor} />
-      <div className={`bg-(--background) rounded-b-lg border-t border-t-(--input)  wrap-break-word`}>
+      <div className={`bg-(--background) rounded-b-lg border-t border-t-(--input) wrap-break-word`}>
         <EditorContent editor={editor} />
       </div>
     </div>

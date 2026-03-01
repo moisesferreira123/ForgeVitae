@@ -4,7 +4,7 @@ import { Bold, Italic, Underline } from '../buttonTypes';
 
 export default function SimplifiedMenuBar({editor} : {editor: Editor}) {
   return (
-    <div className="flex flex-wrap p-1 bg-(--muted)/20">
+    <div className="flex flex-wrap p-1 rounded-t-lg bg-(--card)">
       <div className="flex flex-wrap gap-1 pr-1 ">
         <MenuButton 
           editor={editor} 

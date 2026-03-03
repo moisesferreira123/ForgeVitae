@@ -45,7 +45,7 @@ export default function ProfileSectionForm() {
                 <div 
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="flex flex-col  gap-5"
+                  className="flex flex-col gap-5"
                 >
                   {profileFieldKeys.keys.map((item, index) => (
                     <SectionInput

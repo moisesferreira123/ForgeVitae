@@ -5,6 +5,7 @@ import { useResumeData } from "../../../store/resumeData";
 import React, { useState } from "react";
 import type { Skill, SkillSection } from "../../../pdf/types/skillTypes"; 
 import SkillComp from "./Skill";
+import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 
 export default function SkillSectionForm() {
   const resumeData = useResumeData();
@@ -62,6 +63,20 @@ export default function SkillSectionForm() {
     else setIdUpdateSkill(id);
   }
 
+  function reorder(result: DropResult) {
+    if(!result.destination) return;
+
+    const newSkills = [...skills];
+    const [reorderedSkill] = newSkills.splice(result.source.index, 1);
+    newSkills.splice(result.destination.index, 0, reorderedSkill);
+
+    setSkills(newSkills);
+    resumeData.updateResumeData({
+      type: "skills",
+      skills: newSkills
+    })
+  }
+
   return (
     <div className="space-y-6 ">
       <HeaderForm
@@ -91,18 +106,30 @@ export default function SkillSectionForm() {
         </button>
       </div>
       {skills.length !== 0 && 
-        <div className="space-y-2">
-          {skills.map((skill, index) => (
-            <SkillComp
-              key={index}
-              skill={skill}
-              openUpdateEditor={openUpdateEditor}
-              removeSkill={removeSkill}
-              updateSkill={(idSkill, newContent) => updateSkill(idSkill, newContent)}
-              isEditorOpen={idUpdateSkill === skill.id}
-            />
-          ))}
-        </div>
+        <DragDropContext onDragEnd={reorder} >
+          <Droppable droppableId="skills" type="list" direction="vertical" >
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="flex flex-col gap-2"
+              >
+                {skills.map((skill, index) => (
+                  <SkillComp
+                    key={skill.id}
+                    skill={skill}
+                    position={index}
+                    openUpdateEditor={openUpdateEditor}
+                    removeSkill={removeSkill}
+                    updateSkill={(idSkill, newContent) => updateSkill(idSkill, newContent)}
+                    isEditorOpen={idUpdateSkill === skill.id}
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       }
     </div>
   );

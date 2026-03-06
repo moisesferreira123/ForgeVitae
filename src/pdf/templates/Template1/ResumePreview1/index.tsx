@@ -1,4 +1,5 @@
 import Profile from "./components/Profile";
+import Skills from "./components/Skills";
 import Summary from "./components/Summary";
 
 export default function ResumePreview1() {
@@ -14,14 +15,8 @@ export default function ResumePreview1() {
           <Profile />
           {/* RESUMO */}
           <Summary />
-
           {/* HABILIDADES */}
-          <section className="">
-            <h2 className="text-[12pt] font-bold border-b-2 border-gray-200 mb-1 uppercase tracking-wide">Habilidades</h2>
-            <p className="text-[10pt] pl-2">
-              HTML, CSS, JavaScript, Tailwind CSS, DaisyUI, React, Hooks, Node.js, Express, Prisma, SQL (PostgreSQL, MySQL), Java, Spring Boot, Hibernate, JPA, API Restful, Git, GitHub.
-            </p>
-          </section>
+          <Skills />
 
           {/* OBJETIVO */}
           <section className="">

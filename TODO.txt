@@ -3,3 +3,4 @@ TODO: Colocar o botão de visualizar o currículo em tela cheia
 TODO: Colocar uma caixa de texto em cima dos botões do editor de texto para mostrar os key shortcuts
 TODO: Vou ter que colocar depois para as seções nos resumeData iniciarem com os valores presentes no banco de dados ou localStorage.
 TODO: Fazer a animação do editor de atualização das habilidades descendo
+TODO: Colocar a parte de edição em habilidades para as pessoas poderem editar se querem as habilidades aparecendo em tópicos, separado por vírgula, etc

@@ -4,12 +4,14 @@ import { profileFields } from "../constants/allProfileFields";
 import type { SummarySection } from "../pdf/types/summaryTypes";
 import type { ObjectiveSection } from "../pdf/types/objectiveTypes";
 import type { SkillSection } from "../pdf/types/skillTypes";
+import type { ExperienceSection } from "../pdf/types/experienceTypes";
 
 type ResumeSection = 
   ProfileSection |
   SummarySection |
   ObjectiveSection |
-  SkillSection;
+  SkillSection |
+  ExperienceSection;
 
 type sectionsResumeData = Record<string, ResumeSection>;
 
@@ -37,6 +39,17 @@ export const useResumeData = create<ResumeData>((set) => {
         'skills': {
           type: 'skills',
           skills: []
+        },
+        'experience': {
+          type: 'experience',
+          jobTitle: '',
+          employer: '',
+          startMonth: '',
+          startYear: '',
+          endMonth: '',
+          endYear: '',
+          location: '',
+          description: ''
         }
       },
       updateResumeData: (newSectionData) => set((state) => {
@@ -67,6 +80,13 @@ export const useResumeData = create<ResumeData>((set) => {
               sections: {
                 ...state.sections,
                 'skills': {...newSectionData}
+              }
+            }
+          case 'experience':
+            return {
+              sections: {
+                ...state.sections,
+                'experience': {...newSectionData}
               }
             }
           default:

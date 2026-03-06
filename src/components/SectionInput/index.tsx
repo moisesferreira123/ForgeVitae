@@ -38,19 +38,19 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
   if(!profileInfoInput.isDraggable) return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
-            <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
-              <span>{profileInfoInput.label}</span>
-            </label>
-            {profileInfoInput.isRemovable && 
-            <button
-              onClick={removeInput}
-              className="flex justify-center items-center gap-1.5 text-(--destructive) hover:text-red-500 cursor-pointer"
-            >
-              <Trash2 size={12} />
-              <span className="text-xs">Remover</span>
-            </button>
-            }
-          </div>
+        <label htmlFor={id} className="text-sm font-medium flex items-center gap-2">
+          <span>{profileInfoInput.label}</span>
+        </label>
+        {profileInfoInput.isRemovable && 
+        <button
+          onClick={removeInput}
+          className="flex justify-center items-center gap-1.5 text-(--destructive) hover:text-red-500 cursor-pointer"
+        >
+          <Trash2 size={12} />
+          <span className="text-xs">Remover</span>
+        </button>
+        }
+      </div>
       <input 
         id={id}
         type={profileInfoInput.type} 

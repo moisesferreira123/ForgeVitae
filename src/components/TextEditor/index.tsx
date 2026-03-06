@@ -30,7 +30,7 @@ export default function TextEditor({placeholder, minHeight, updateData, initialC
         class: `px-4 py-2 outline-none focus:outline-none [&_ul]:list-disc [&_ul]:pl-4 [&_ol]:list-decimal [&_ol]:pl-4`,
         style: `min-height: ${minHeight}px;`
       },
-      handleKeyDown: (view, event) => {
+      handleKeyDown: (_, event) => {
         if(event.key === 'Tab') {
           if(editor.isActive('listItem')) {
             if(event.shiftKey) editor.commands.liftListItem('listItem');

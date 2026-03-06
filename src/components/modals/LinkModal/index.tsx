@@ -2,11 +2,12 @@ import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLinkModal } from "../../../store/modalStore";
 import { useResumeData } from "../../../store/resumeData";
+import type { ProfileSection } from "../../../pdf/types/profileTypes";
 
 export default function LinkModal({linkId, linkName} : {linkId: string, linkName: string}) {
   const linkModal = useLinkModal();
   const resumeData = useResumeData();
-  const [link, setLink] = useState(resumeData.sections['profile'].fields[linkId].link);
+  const [link, setLink] = useState((resumeData.sections['profile'] as ProfileSection).fields[linkId].link);
   const modalRef = useRef<HTMLDivElement>(null);
 
   function save(e: React.SubmitEvent<HTMLFormElement>) {
@@ -21,8 +22,8 @@ export default function LinkModal({linkId, linkName} : {linkId: string, linkName
     }
 
     const newResumeData = {...resumeData};
-    newResumeData.sections['profile'].fields[linkId].link = url;
-    resumeData.updateResumeData(newResumeData.sections);
+    (newResumeData.sections['profile'] as ProfileSection).fields[linkId].link = url;
+    resumeData.updateResumeData(newResumeData.sections['profile']);
     linkModal.updateModal();
   }
 

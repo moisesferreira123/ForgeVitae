@@ -67,7 +67,7 @@ export default function ExperienceSectionForm() {
         <div className="space-y-6">
           {(resumeData.sections['experience'] as ExperienceSection).experiences.length !== 0 ? 
             <DragDropContext onDragEnd={reorder} >
-              <Droppable droppableId="skills" type="list" direction="vertical" >
+              <Droppable droppableId="experience" type="list" direction="vertical" >
                 {(provided) => ( 
                   <div 
                     ref={provided.innerRef}

@@ -5,13 +5,15 @@ import type { SummarySection } from "../pdf/types/summaryTypes";
 import type { ObjectiveSection } from "../pdf/types/objectiveTypes";
 import type { SkillSection } from "../pdf/types/skillTypes";
 import type { ExperienceSection } from "../pdf/types/experienceTypes";
+import type { EducationSection } from "../pdf/types/educationTypes";
 
 type ResumeSection = 
   ProfileSection |
   SummarySection |
   ObjectiveSection |
   SkillSection |
-  ExperienceSection;
+  ExperienceSection |
+  EducationSection;
 
 type sectionsResumeData = Record<string, ResumeSection>;
 
@@ -43,6 +45,10 @@ export const useResumeData = create<ResumeData>((set) => {
         'experience': {
           type: 'experience',
           experiences: []
+        },
+        'education' : {
+          type: 'education',
+          education: []
         }
       },
       updateResumeData: (newSectionData) => set((state) => {
@@ -80,6 +86,13 @@ export const useResumeData = create<ResumeData>((set) => {
               sections: {
                 ...state.sections,
                 'experience': {...newSectionData}
+              }
+            }
+          case 'education':
+            return {
+              sections: {
+                ...state.sections,
+                'education': {...newSectionData}
               }
             }
           default:

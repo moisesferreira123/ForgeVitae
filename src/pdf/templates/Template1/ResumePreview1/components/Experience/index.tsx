@@ -17,8 +17,8 @@ export default function Experience() {
                 <p className="text-[10pt] italic">{experience.employer}</p>
               </div>
               <div className="text-right">
-                {/* Criar uma função para retornar uma string com a data da forma escolhida */}
-                <p className="text-[10pt] text-gray-700">{`${experience.startMonth}. ${experience.startYear} - ${experience.endMonth}. ${experience.endYear}`}</p>
+                {/* TODO: Criar uma função para retornar uma string com a data da forma escolhida */}
+                <p className="text-[10pt] text-gray-700">{`${experience.startMonth}. ${experience.startYear} - ${experience.endMonth !== 'Atual' ? `${experience.endMonth}. ${experience.endYear}`: 'Atual'}`}</p>
                 <p className="text-[10pt] text-gray-700">{experience.location}</p>
               </div>
             </div>

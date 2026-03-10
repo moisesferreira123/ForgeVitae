@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { ExperienceSection } from "../../../../pdf/types/experienceTypes";
 import { useResumeData } from "../../../../store/resumeData";
 import Input from "../../../Input";
 import Label from "../../../Label";
@@ -7,27 +6,28 @@ import Months from "../../../Months";
 import DataPickerButton from "../../../DataPickerButton";
 import Years from "../../../Years";
 import TextEditor from "../../../TextEditor";
+import type { EducationSection } from "../../../../pdf/types/educationTypes";
 
-interface ExperienceFormProps {
-  experienceIndex: number;
-  closeExperienceForm: () => void;
+interface EducationFormProps {
+  educationIndex: number;
+  closeEducationForm: () => void;
 }
 
-export default function ExperienceForm({experienceIndex, closeExperienceForm}: ExperienceFormProps) {
+export default function EducationForm({educationIndex, closeEducationForm}: EducationFormProps) {
   const resumeData = useResumeData();
-  const [startMonth, setStartMonth] = useState((resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].startMonth || '');
-  const [startYear, setStartYear] = useState((resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].startYear || '');
-  const [endMonth, setEndMonth] = useState((resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].endMonth || '');
-  const [endYear, setEndYear] = useState((resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].endYear || '');
+  const [startMonth, setStartMonth] = useState((resumeData.sections['education'] as EducationSection).education[educationIndex].startMonth || '');
+  const [startYear, setStartYear] = useState((resumeData.sections['education'] as EducationSection).education[educationIndex].startYear || '');
+  const [endMonth, setEndMonth] = useState((resumeData.sections['education'] as EducationSection).education[educationIndex].endMonth || '');
+  const [endYear, setEndYear] = useState((resumeData.sections['education'] as EducationSection).education[educationIndex].endYear || '');
   const [dateModal, setDateModal] = useState('');
   const [isCurrent, setIsCurrent] = useState(false);
 
   function onChange(inputName: string, event: React.ChangeEvent<HTMLInputElement>) {
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    if(inputName === 'job-title') newExperience.experiences[experienceIndex].jobTitle = event.target.value;
-    if(inputName === 'employer') newExperience.experiences[experienceIndex].employer = event.target.value;
-    if(inputName === 'location') newExperience.experiences[experienceIndex].location = event.target.value;
-    resumeData.updateResumeData(newExperience);
+    const newEducation = {...(resumeData.sections['education'] as EducationSection)};
+    if(inputName === 'educational-institution') newEducation.education[educationIndex].educationalInstitution = event.target.value;
+    if(inputName === 'degree') newEducation.education[educationIndex].degree = event.target.value;
+    if(inputName === 'location') newEducation.education[educationIndex].location = event.target.value;
+    resumeData.updateResumeData(newEducation);
   }
 
   function handleCurrentExperience() {
@@ -43,34 +43,34 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
 
   function handleStartMonthSelection(month: string) {
     setStartMonth(month);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
+    const newEducation = {...(resumeData.sections['education'] as EducationSection)};
     if(month !== '') setDateModal('');
-    newExperience.experiences[experienceIndex].startMonth = month;
-    resumeData.updateResumeData(newExperience);
+    newEducation.education[educationIndex].startMonth = month;
+    resumeData.updateResumeData(newEducation);
   }
 
   function handleStartYearSelection(year: string) {
     setStartYear(year);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
+    const newEducation = {...(resumeData.sections['education'] as EducationSection)};
     if(year !== '') setDateModal('');
-    newExperience.experiences[experienceIndex].startYear = year;
-    resumeData.updateResumeData(newExperience);
+    newEducation.education[educationIndex].startYear = year;
+    resumeData.updateResumeData(newEducation);
   }
 
   function handleEndMonthSelection(month: string) {
     setEndMonth(month);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
+    const newEducation = {...(resumeData.sections['education'] as EducationSection)};
     if(month !== '') setDateModal('');
-    newExperience.experiences[experienceIndex].endMonth = month;
-    resumeData.updateResumeData(newExperience);
+    newEducation.education[educationIndex].endMonth = month;
+    resumeData.updateResumeData(newEducation);
   }
 
   function handleEndYearSelection(year: string) {
     setEndYear(year);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
+    const newEducation = {...(resumeData.sections['education'] as EducationSection)};
     if(year !== '') setDateModal('');
-    newExperience.experiences[experienceIndex].endYear = year;
-    resumeData.updateResumeData(newExperience);
+    newEducation.education[educationIndex].endYear = year;
+    resumeData.updateResumeData(newEducation);
   }
 
   function handleClickDateButton(newDateModal: string) {
@@ -100,31 +100,31 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
   }
 
   function updateData(html: string) {
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    newExperience.experiences[experienceIndex].description = html;
-    resumeData.updateResumeData(newExperience);
+    const newEducation = {...(resumeData.sections['education'] as EducationSection)};
+    newEducation.education[educationIndex].description = html;
+    resumeData.updateResumeData(newEducation);
   }
 
   return (
     <div className="space-y-5">
       <div className="space-y-2">
-        <Label id="job-title" value="Título do Cargo" />
+        <Label id="educational-institution" value="Instituição de Ensino" />
         <Input 
-          id="job-title"
+          id="educational-institution"
           type="text"
           placeholder="Digite o título do cargo..."
-          value={(resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].jobTitle}
-          onChange={event => onChange('job-title', event)}
+          value={(resumeData.sections['education'] as EducationSection).education[educationIndex].educationalInstitution}
+          onChange={event => onChange('educational-institution', event)}
         />
       </div>
       <div className="space-y-2">
-        <Label id="employer" value="Empregador" />
+        <Label id="degree" value="Diploma" />
         <Input 
-          id="employer"
+          id="degree"
           type="text"
           placeholder="Digite o empregador..."
-          value={(resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].employer}
-          onChange={event => onChange('employer', event)}
+          value={(resumeData.sections['education'] as EducationSection).education[educationIndex].degree}
+          onChange={event => onChange('degree', event)}
         />
       </div>
       <div className="space-y-2">
@@ -133,7 +133,7 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
           id="location"
           type="text"
           placeholder="Cidade, Estado"
-          value={(resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].location}
+          value={(resumeData.sections['education'] as EducationSection).education[educationIndex].location}
           onChange={event => onChange('location', event)}
         />
       </div>
@@ -237,12 +237,12 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
           placeholder="Descreva suas responsabilidades e principais conquistas..." 
           minHeight={180} 
           updateData={html => updateData(html)} 
-          initialContent={(resumeData.sections['experience'] as ExperienceSection).experiences[experienceIndex].description}
+          initialContent={(resumeData.sections['education'] as EducationSection).education[educationIndex].description}
         />
       </div>
       <button 
         className="flex mt-8 h-10 w-full justify-center items-center gap-2 text-(--foreground) bg-(--primary) rounded-lg text-md font-semibold transition-colors duration-200 enabled:hover:bg-(--primary)/90 cursor-pointer"
-        onClick={closeExperienceForm}
+        onClick={closeEducationForm}
       >
         <span>Concluir</span>
       </button>

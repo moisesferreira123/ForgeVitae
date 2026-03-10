@@ -20,6 +20,9 @@ export default function ResumePreview1() {
           <Skills />
           {/* Experiências */}
           <Experiences />
+          {/* Projetos */}
+          {/* Idiomas */}
+          {/* Educação */}
           
 
           {/* OBJETIVO */}

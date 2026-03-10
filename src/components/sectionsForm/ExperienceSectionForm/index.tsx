@@ -1,92 +1,54 @@
-import { BriefcaseBusiness } from "lucide-react";
+import { BriefcaseBusiness, Plus } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
-import Input from "../../Input";
-import Label from "../../Label";
 import { useResumeData } from "../../../store/resumeData";
-import type { ExperienceSection } from "../../../pdf/types/experienceTypes";
-import DataPickerButton from "../../DataPickerButton";
-import Months from "../../Months";
+import ExperienceForm from "./ExperienceForm";
 import { useState } from "react";
-import Years from "../../Years";
-import TextEditor from "../../TextEditor";
+import type { Experience, ExperienceSection } from "../../../pdf/types/experienceTypes";
+import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
+import ExperienceComp from "./Experiece";
 
 export default function ExperienceSectionForm() {
   const resumeData = useResumeData();
-  const [startMonth, setStartMonth] = useState((resumeData.sections['experience'] as ExperienceSection).startMonth || '');
-  const [startYear, setStartYear] = useState((resumeData.sections['experience'] as ExperienceSection).startYear || '');
-  const [endMonth, setEndMonth] = useState((resumeData.sections['experience'] as ExperienceSection).endMonth || '');
-  const [endYear, setEndYear] = useState((resumeData.sections['experience'] as ExperienceSection).endYear || '');
-  const [dateModal, setDateModal] = useState('');
+  const [experienceIndex, setExperienceIndex] = useState<number | null>(null);
 
-  function onChange(inputName: string, event: React.ChangeEvent<HTMLInputElement>) {
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    if(inputName === 'job-title') newExperience.jobTitle = event.target.value;
-    if(inputName === 'employer') newExperience.employer = event.target.value;
-    if(inputName === 'location') newExperience.location = event.target.value;
-    resumeData.updateResumeData(newExperience);
+  function addExperience() {
+    const newExperiences = {...(resumeData.sections['experience'] as ExperienceSection)};
+    const experience: Experience = {
+      jobTitle: '',
+      employer: '',
+      startMonth: '',
+      startYear: '',
+      endMonth: '',
+      endYear: '',
+      location: '',
+      description: ''
+    };
+    newExperiences.experiences.push(experience);
+    resumeData.updateResumeData(newExperiences);
+    setExperienceIndex((resumeData.sections['experience'] as ExperienceSection).experiences.length-1);
   }
 
-  function handleStartMonthSelection(month: string) {
-    setStartMonth(month);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    if(month !== '') setDateModal('');
-    newExperience.startMonth = month;
-    resumeData.updateResumeData(newExperience);
+  function removeExperience(e: React.MouseEvent, position: number) {
+    e.stopPropagation();
+    const filteredExperiences = [...(resumeData.sections['experience'] as ExperienceSection).experiences];
+    filteredExperiences.splice(position, 1);
+    resumeData.updateResumeData({
+      type: 'experience',
+      experiences: filteredExperiences
+    })
   }
 
-  function handleStartYearSelection(year: string) {
-    setStartYear(year);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    if(year !== '') setDateModal('');
-    newExperience.startYear = year;
-    resumeData.updateResumeData(newExperience);
-  }
+  function reorder(result: DropResult) {
+    if(!result.destination) return;
 
-  function handleEndMonthSelection(month: string) {
-    setEndMonth(month);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    if(month !== '') setDateModal('');
-    newExperience.endMonth = month;
-    resumeData.updateResumeData(newExperience);
-  }
+    const newExperiences = [...(resumeData.sections['experience'] as ExperienceSection).experiences];
+    const [reorderedExperience] = newExperiences.splice(result.source.index, 1);
+    newExperiences.splice(result.destination.index, 0, reorderedExperience);
 
-  function handleEndYearSelection(year: string) {
-    setEndYear(year);
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    if(year !== '') setDateModal('');
-    newExperience.endYear = year;
-    resumeData.updateResumeData(newExperience);
-  }
-
-  function handleClickDateButton(newDateModal: string) {
-    if(dateModal === newDateModal) setDateModal('');
-    else setDateModal(newDateModal);
-  }
-
-  function clearStartMonth(event: React.MouseEvent) {
-    event.stopPropagation();
-    handleStartMonthSelection('');
-  }
-
-  function clearStartYear(event: React.MouseEvent) {
-    event.stopPropagation();
-    handleStartYearSelection('');
-  }
-
-  function clearEndMonth(event: React.MouseEvent) {
-    event.stopPropagation();
-    handleEndMonthSelection('');
-  }
-
-  function clearEndYear(event: React.MouseEvent) {
-    event.stopPropagation();
-    handleEndYearSelection('');
-  }
-
-  function updateData(html: string) {
-    const newExperience = {...(resumeData.sections['experience'] as ExperienceSection)};
-    newExperience.description = html;
-    resumeData.updateResumeData(newExperience);
+    resumeData.updateResumeData({
+      type: 'experience',
+      experiences: newExperiences
+    })
   }
 
   return (
@@ -96,124 +58,48 @@ export default function ExperienceSectionForm() {
         subtitle="Adicione suas experiências de trabalho"
         Icon={BriefcaseBusiness}
       />
-      <div className="space-y-5">
-        <div className="space-y-2">
-          <Label id="job-title" value="Título do Cargo" />
-          <Input 
-            id="job-title"
-            type="text"
-            placeholder="Digite o título do cargo..."
-            value={(resumeData.sections['experience'] as ExperienceSection).jobTitle}
-            onChange={event => onChange('job-title', event)}
-          />
+      {experienceIndex !== null ? 
+        <ExperienceForm 
+          experienceIndex={experienceIndex} 
+          closeExperienceForm={() => setExperienceIndex(null)}
+        /> 
+        :
+        <div className="space-y-6">
+          {(resumeData.sections['experience'] as ExperienceSection).experiences.length !== 0 ? 
+            <DragDropContext onDragEnd={reorder} >
+              <Droppable droppableId="skills" type="list" direction="vertical" >
+                {(provided) => ( 
+                  <div 
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="flex flex-col gap-2 w-full text-center py-4"
+                  >
+                    {(resumeData.sections['experience'] as ExperienceSection).experiences.map((experience, index) => (
+                      <ExperienceComp 
+                        key={index}
+                        experience={experience}
+                        position={index}
+                        openExperienceUpdate={() => setExperienceIndex(index)}
+                        removeExperience={(e) => removeExperience(e, index)}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )} 
+              </Droppable>
+            </DragDropContext>
+            : 
+            <div className="w-full text-center border-y border-(--border) py-4 text-(--muted-foreground)">Adicione uma experiência</div>
+          }
+          <button 
+            className="flex h-10 w-full justify-center items-center gap-2 text-(--foreground) bg-(--primary) rounded-lg text-sm font-medium transition-colors duration-200 enabled:hover:bg-(--primary)/90 cursor-pointer"
+            onClick={addExperience}
+          >
+            <Plus size={18} />
+            <span>Adicionar experiência</span>
+          </button>
         </div>
-        <div className="space-y-2">
-          <Label id="employer" value="Empregador" />
-          <Input 
-            id="employer"
-            type="text"
-            placeholder="Digite o empregador..."
-            value={(resumeData.sections['experience'] as ExperienceSection).employer}
-            onChange={event => onChange('employer', event)}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label id="location" value="Localização" />
-          <Input 
-            id="location"
-            type="text"
-            placeholder="Cidade, Estado"
-            value={(resumeData.sections['experience'] as ExperienceSection).location}
-            onChange={event => onChange('location', event)}
-          />
-        </div>
-        <div className="grid grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label id="start-date" value="Data de Início" />
-            <div className="grid grid-cols-2 gap-1">
-              <div className="relative">
-                <DataPickerButton
-                  defaultText="Mês"
-                  selectedDate={startMonth}
-                  isSelected={startMonth !== ''}
-                  onClickButton={() => handleClickDateButton('start-month')}
-                  clear={(e) => clearStartMonth(e)}
-                />
-                {dateModal === 'start-month' &&
-                  <Months 
-                    selectedMonth={startMonth} 
-                    selectMonth={month => handleStartMonthSelection(month)}
-                    changeDateModal={() => setDateModal('')}
-                  />
-                }
-              </div>
-              <div className="relative">
-                <DataPickerButton
-                  defaultText="Ano"
-                  selectedDate={startYear}
-                  isSelected={startYear !== ''}
-                  onClickButton={() => handleClickDateButton('start-year')}
-                  clear={(e) => clearStartYear(e)}
-                />
-                {dateModal === 'start-year' &&
-                  <Years 
-                    selectedYear={startYear} 
-                    selectYear={year => handleStartYearSelection(year)}
-                    changeDateModal={() => setDateModal('')}
-                  />
-                }
-              </div>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label id="end-date" value="Data de Fim" />
-            <div className="grid grid-cols-2 gap-1">
-              <div className="relative">
-                <DataPickerButton
-                  defaultText="Mês"
-                  selectedDate={endMonth}
-                  isSelected={endMonth !== ''}
-                  onClickButton={() => handleClickDateButton('end-month')}
-                  clear={(e) => clearEndMonth(e)}
-                />
-                {dateModal === 'end-month' &&
-                  <Months 
-                    selectedMonth={endMonth} 
-                    selectMonth={month => handleEndMonthSelection(month)}
-                    changeDateModal={() => setDateModal('')}
-                  />
-                }
-              </div>
-              <div className="relative">
-                <DataPickerButton
-                  defaultText="Ano"
-                  selectedDate={endYear}
-                  isSelected={endYear !== ''}
-                  onClickButton={() => handleClickDateButton('end-year')}
-                  clear={(e) => clearEndYear(e)}
-                />
-                {dateModal === 'end-year' &&
-                  <Years 
-                    selectedYear={endYear} 
-                    selectYear={year => handleEndYearSelection(year)}
-                    startedYear={startYear}
-                    changeDateModal={() => setDateModal('')}
-                  />
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label id="description" value="Descrição" />
-          <TextEditor 
-            placeholder="Descreva suas responsabilidades e principais conquistas..." 
-            minHeight={180} 
-            updateData={html => updateData(html)} 
-            initialContent={(resumeData.sections['experience'] as ExperienceSection).description}
-          />
-        </div>
-      </div>
+      }
     </div>
   );
 }

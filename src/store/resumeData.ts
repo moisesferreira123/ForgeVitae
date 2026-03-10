@@ -42,14 +42,7 @@ export const useResumeData = create<ResumeData>((set) => {
         },
         'experience': {
           type: 'experience',
-          jobTitle: '',
-          employer: '',
-          startMonth: '',
-          startYear: '',
-          endMonth: '',
-          endYear: '',
-          location: '',
-          description: ''
+          experiences: []
         }
       },
       updateResumeData: (newSectionData) => set((state) => {

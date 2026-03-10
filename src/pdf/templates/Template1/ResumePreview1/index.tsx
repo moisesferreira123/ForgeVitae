@@ -1,3 +1,4 @@
+import Experiences from "./components/Experience";
 import Profile from "./components/Profile";
 import Skills from "./components/Skills";
 import Summary from "./components/Summary";
@@ -17,6 +18,9 @@ export default function ResumePreview1() {
           <Summary />
           {/* HABILIDADES */}
           <Skills />
+          {/* Experiências */}
+          <Experiences />
+          
 
           {/* OBJETIVO */}
           <section className="">

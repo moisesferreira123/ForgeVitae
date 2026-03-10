@@ -54,7 +54,7 @@ html, body {
 }
 
 .tiptap p.is-editor-empty:first-child::before {
-  color: #9ca3af;
+  color: color-mix(in srgb, var(--foreground), transparent 60%);
   content: attr(data-placeholder);
   float: left;
   height: 0;

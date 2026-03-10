@@ -1,5 +1,4 @@
-export interface ExperienceSection {
-  type: string;
+export interface Experience {
   jobTitle: string;
   employer: string;
   startMonth: string;
@@ -8,4 +7,9 @@ export interface ExperienceSection {
   endYear: string;
   location: string;
   description: string;
+}
+
+export interface ExperienceSection {
+  type: string;
+  experiences: Experience[]
 }

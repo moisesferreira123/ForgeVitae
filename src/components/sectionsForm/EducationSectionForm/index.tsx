@@ -54,7 +54,7 @@ export default function EducationSectionForm() {
   return (
     <div className="space-y-6">
       <HeaderForm 
-        title="Educação"
+        title="Formação Acadêmica"
         subtitle="Adicione suas formações acadêmicas"
         Icon={GraduationCap}
       />

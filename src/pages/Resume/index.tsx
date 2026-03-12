@@ -1,4 +1,4 @@
-import { ArrowLeft, Brain, BriefcaseBusiness, FileText, GraduationCap, User } from "lucide-react";
+import { ArrowLeft, Brain, BriefcaseBusiness, Earth, FileText, GraduationCap, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionSidebar from "../../components/SectionsSidebar";
 import { useState } from "react";
@@ -33,8 +33,13 @@ const INITIAL_SECTION: SectionItem[] = [
   },
   {
     id: 4,
-    label: 'Educação',
+    label: 'Formação Acadêmica',
     icon: GraduationCap,
+  },
+  {
+    id: 5,
+    label: 'Idiomas',
+    icon: Earth,
   },
 ]
 

@@ -1,5 +1,6 @@
 import Education from "./components/Education";
 import Experiences from "./components/Experience";
+import Language from "./components/Language";
 import Profile from "./components/Profile";
 import Skills from "./components/Skills";
 import Summary from "./components/Summary";
@@ -22,9 +23,11 @@ export default function ResumePreview1() {
           {/* Experiências */}
           <Experiences />
           {/* Projetos */}
+
           {/* Educação */}
           <Education />
           {/* Idiomas */}
+          <Language />
           
 
           {/* OBJETIVO */}

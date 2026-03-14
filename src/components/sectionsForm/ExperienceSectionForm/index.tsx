@@ -3,7 +3,7 @@ import HeaderForm from "../../HeaderForm";
 import { useResumeData } from "../../../store/resumeData";
 import ExperienceForm from "./ExperienceForm";
 import { useState } from "react";
-import type { Experience, ExperienceSection } from "../../../pdf/types/experienceTypes";
+import type { Experience, ExperienceSection } from "../../../types/experienceTypes";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 import ExperienceComp from "./Experiece";
 

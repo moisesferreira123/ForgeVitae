@@ -1,6 +1,6 @@
 import ComponentHTML from "../../../../../../components/ComponentHTML";
 import { useResumeData } from "../../../../../../store/resumeData";
-import type { SkillSection } from "../../../../../types/skillTypes";
+import type { SkillSection } from "../../../../../../types/skillTypes";
 
 export default function Skills() {
   const data = (useResumeData().sections['skills'] as SkillSection).skills;

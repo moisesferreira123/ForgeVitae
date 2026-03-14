@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import type { ProfileSection } from "../pdf/types/profileTypes";
+import type { ProfileSection } from "../types/profileTypes";
 import { profileFields } from "../constants/allProfileFields";
-import type { SummarySection } from "../pdf/types/summaryTypes";
-import type { ObjectiveSection } from "../pdf/types/objectiveTypes";
-import type { SkillSection } from "../pdf/types/skillTypes";
-import type { ExperienceSection } from "../pdf/types/experienceTypes";
-import type { EducationSection } from "../pdf/types/educationTypes";
+import type { SummarySection } from "../types/summaryTypes";
+import type { ObjectiveSection } from "../types/objectiveTypes";
+import type { SkillSection } from "../types/skillTypes";
+import type { ExperienceSection } from "../types/experienceTypes";
+import type { EducationSection } from "../types/educationTypes";
+import type { LanguageSection } from "../types/languageTypes";
 
 type ResumeSection = 
   ProfileSection |
@@ -13,7 +14,8 @@ type ResumeSection =
   ObjectiveSection |
   SkillSection |
   ExperienceSection |
-  EducationSection;
+  EducationSection |
+  LanguageSection;
 
 type sectionsResumeData = Record<string, ResumeSection>;
 
@@ -49,6 +51,10 @@ export const useResumeData = create<ResumeData>((set) => {
         'education' : {
           type: 'education',
           education: []
+        },
+        'language' : {
+          type: 'language',
+          languages: []
         }
       },
       updateResumeData: (newSectionData) => set((state) => {
@@ -93,6 +99,13 @@ export const useResumeData = create<ResumeData>((set) => {
               sections: {
                 ...state.sections,
                 'education': {...newSectionData}
+              }
+            }
+          case 'language':
+            return {
+              sections: {
+                ...state.sections,
+                'language': {...newSectionData}
               }
             }
           default:

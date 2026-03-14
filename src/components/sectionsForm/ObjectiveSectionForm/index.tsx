@@ -2,7 +2,7 @@ import { Target } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import TextEditor from "../../TextEditor";
 import { useResumeData } from "../../../store/resumeData";
-import type { ObjectiveSection } from "../../../pdf/types/objectiveTypes";
+import type { ObjectiveSection } from "../../../types/objectiveTypes";
 
 export default function ObjectiveSectionForm() {
   const resumeData = useResumeData();

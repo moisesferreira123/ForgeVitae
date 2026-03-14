@@ -6,7 +6,7 @@ import { useProdileFieldKeys } from "../../store/profileFieldsKeys";
 import { useLinkModal } from "../../store/modalStore";
 import LinkModal from "../modals/LinkModal";
 import { useResumeData } from "../../store/resumeData";
-import type { ProfileSection } from "../../pdf/types/profileTypes";
+import type { ProfileSection } from "../../types/profileTypes";
 
 export default function SectionInput({id, profileInfoInput, position, value, onChangeInput} : InputItem) {
   const profileFieldKeys = useProdileFieldKeys();

@@ -1,6 +1,6 @@
 import { GripVertical, Trash2 } from "lucide-react";
 import { Draggable } from "@hello-pangea/dnd";
-import type { Experience } from "../../../../pdf/types/experienceTypes";
+import type { Experience } from "../../../../types/experienceTypes";
 
 interface ExperienceProps {
   experience: Experience;

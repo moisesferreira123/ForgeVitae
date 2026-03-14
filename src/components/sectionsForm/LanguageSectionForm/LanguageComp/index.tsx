@@ -1,15 +1,15 @@
 import { Draggable } from "@hello-pangea/dnd";
-import type { Education } from "../../../../types/educationTypes";
+import type { Language } from "../../../../types/languageTypes";
 import { GripVertical, Trash2 } from "lucide-react";
 
-interface EducationProps {
-  education: Education;
+interface LanguageProps {
+  language: Language;
   position: number;
-  openEducationUpdate: (id: number) => void;
-  removeEducation: (e: React.MouseEvent, id: number) => void;
+  openLanguageUpdate: (id: number) => void;
+  removeLanguage: (e: React.MouseEvent, id: number) => void;
 }
 
-export default function EducationComp({education, position, openEducationUpdate, removeEducation} : EducationProps) {
+export default function LanguageComp({language, position, openLanguageUpdate, removeLanguage} : LanguageProps) {
   return (
     <Draggable draggableId={`${position}`} index={position} >
       {(provided) => (
@@ -21,7 +21,7 @@ export default function EducationComp({education, position, openEducationUpdate,
           <div 
             role="button"
             tabIndex={0}
-            onClick={() => openEducationUpdate(position)}
+            onClick={() => openLanguageUpdate(position)}
             className={`flex items-center gap-2 p-3 rounded-lg bg-(--card) cursor-pointer`}
           >
             <div 
@@ -32,13 +32,13 @@ export default function EducationComp({education, position, openEducationUpdate,
             </div>
             <div className="flex-1 truncate">
               <p className="flex">
-                {education.educationalInstitution && <span className="font-bold">{education.educationalInstitution}</span>}
-                {education.degree && education.educationalInstitution && <span>{`, ${education.degree}`}</span>}
-                {education.degree && !education.educationalInstitution && <span>{`${education.degree}`}</span>}
+                {language.language && <span className="font-bold">{language.language}</span>}
+                {language.level && language.language && <span>{`, ${language.level}`}</span>}
+                {language.level && !language.language && <span>{`${language.level}`}</span>}
               </p>
             </div>
             <button
-              onClick={(e) => removeEducation(e, position)}
+              onClick={(e) => removeLanguage(e, position)}
               className="flex flex-none z-10 justify-center items-center w-8 h-8 cursor-pointer rounded-md text-(--destructive) hover:bg-red-400/20"
             >
               <Trash2 size={20} />

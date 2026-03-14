@@ -1,6 +1,6 @@
 import ComponentHTML from "../../../../../../components/ComponentHTML";
 import { useResumeData } from "../../../../../../store/resumeData";
-import type { SummarySection } from "../../../../../types/summaryTypes";
+import type { SummarySection } from "../../../../../../types/summaryTypes";
 
 export default function Summary() {
   const data = useResumeData().sections['summary'] as SummarySection;

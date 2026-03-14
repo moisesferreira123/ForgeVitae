@@ -6,7 +6,7 @@ import { Plus, User } from "lucide-react";
 import { useProdileFieldKeys } from "../../../store/profileFieldsKeys";
 import { profileFieldsInput } from "../../../constants/allProfileFieldsInput";
 import { useAddProfileInfoModal } from "../../../store/modalStore";
-import type { ProfileSection } from "../../../pdf/types/profileTypes";
+import type { ProfileSection } from "../../../types/profileTypes";
 
 export default function ProfileSectionForm() {
   const resumeData = useResumeData();

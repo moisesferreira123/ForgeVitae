@@ -2,7 +2,7 @@ import { GraduationCap, Plus } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import { useResumeData } from "../../../store/resumeData";
 import { useState } from "react";
-import type { Education, EducationSection } from "../../../pdf/types/educationTypes";
+import type { Education, EducationSection } from "../../../types/educationTypes";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 import EducationForm from "./EducationForm";
 import EducationComp from "./Education";

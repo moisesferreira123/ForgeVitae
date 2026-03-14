@@ -3,7 +3,7 @@ import HeaderForm from "../../HeaderForm";
 import SkillTextEditor from "../../TextEditor/SkillTextEditor";
 import { useResumeData } from "../../../store/resumeData";
 import React, { useState } from "react";
-import type { Skill, SkillSection } from "../../../pdf/types/skillTypes"; 
+import type { Skill, SkillSection } from "../../../types/skillTypes"; 
 import SkillComp from "./Skill";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ExperienceSection } from "../../../../pdf/types/experienceTypes";
+import type { ExperienceSection } from "../../../../types/experienceTypes";
 import { useResumeData } from "../../../../store/resumeData";
 import Input from "../../../Input";
 import Label from "../../../Label";

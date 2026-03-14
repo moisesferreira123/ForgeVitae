@@ -1,6 +1,6 @@
 import { GripVertical, Trash2 } from "lucide-react";
 import ComponentHTML from "../../../ComponentHTML";
-import type { Skill } from "../../../../pdf/types/skillTypes";
+import type { Skill } from "../../../../types/skillTypes";
 import SkillTextEditor from "../../../TextEditor/SkillTextEditor";
 import { useEffect, useState } from "react";
 import { Draggable } from "@hello-pangea/dnd";

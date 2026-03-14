@@ -6,7 +6,7 @@ import Months from "../../../Months";
 import DataPickerButton from "../../../DataPickerButton";
 import Years from "../../../Years";
 import TextEditor from "../../../TextEditor";
-import type { EducationSection } from "../../../../pdf/types/educationTypes";
+import type { EducationSection } from "../../../../types/educationTypes";
 
 interface EducationFormProps {
   educationIndex: number;

@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLinkModal } from "../../../store/modalStore";
 import { useResumeData } from "../../../store/resumeData";
-import type { ProfileSection } from "../../../pdf/types/profileTypes";
+import type { ProfileSection } from "../../../types/profileTypes";
 
 export default function LinkModal({linkId, linkName} : {linkId: string, linkName: string}) {
   const linkModal = useLinkModal();

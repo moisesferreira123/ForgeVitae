@@ -2,7 +2,7 @@ import {FileText } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import TextEditor from "../../TextEditor";
 import { useResumeData } from "../../../store/resumeData";
-import type { SummarySection } from "../../../pdf/types/summaryTypes";
+import type { SummarySection } from "../../../types/summaryTypes";
 
 export default function SummarySectionForm() {
   const resumeData = useResumeData();

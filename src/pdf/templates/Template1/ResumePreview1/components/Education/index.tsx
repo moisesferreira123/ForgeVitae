@@ -1,6 +1,6 @@
 import ComponentHTML from "../../../../../../components/ComponentHTML";
 import { useResumeData } from "../../../../../../store/resumeData";
-import type { EducationSection } from "../../../../../types/educationTypes";
+import type { EducationSection } from "../../../../../../types/educationTypes";
 
 export default function Education() {
   const data = (useResumeData().sections['education'] as EducationSection).education;

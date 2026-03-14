@@ -1,4 +1,4 @@
-import type { ProfileField } from "../pdf/types/profileTypes";
+import type { ProfileField } from "../types/profileTypes";
 import Email from "../assets/Email";
 import Phone from "../assets/Phone";
 import MapPin from "../assets/MapPin";

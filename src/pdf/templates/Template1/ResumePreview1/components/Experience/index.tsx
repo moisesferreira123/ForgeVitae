@@ -1,6 +1,6 @@
 import ComponentHTML from "../../../../../../components/ComponentHTML";
 import { useResumeData } from "../../../../../../store/resumeData";
-import type { ExperienceSection } from "../../../../../types/experienceTypes";
+import type { ExperienceSection } from "../../../../../../types/experienceTypes";
 
 export default function Experience() {
   const data = (useResumeData().sections['experience'] as ExperienceSection).experiences;

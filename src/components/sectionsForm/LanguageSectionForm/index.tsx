@@ -1,4 +1,4 @@
-import { Earth, Plus } from "lucide-react";
+import { Languages, Plus } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import { useResumeData } from "../../../store/resumeData";
 import { useState } from "react";
@@ -51,7 +51,7 @@ export default function LanguageSectionForm() {
       <HeaderForm
         title="Idiomas"
         subtitle="Liste as línguas que você conhece e seu respectivo nível de domínio."
-        Icon={Earth}
+        Icon={Languages}
       />
       {languageIndex !== null ? 
         <LanguageForm 

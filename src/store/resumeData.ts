@@ -7,6 +7,7 @@ import type { SkillSection } from "../types/skillTypes";
 import type { ExperienceSection } from "../types/experienceTypes";
 import type { EducationSection } from "../types/educationTypes";
 import type { LanguageSection } from "../types/languageTypes";
+import type { ProjectSection } from "../types/projectType";
 
 type ResumeSection = 
   ProfileSection |
@@ -15,7 +16,8 @@ type ResumeSection =
   SkillSection |
   ExperienceSection |
   EducationSection |
-  LanguageSection;
+  LanguageSection |
+  ProjectSection;
 
 type sectionsResumeData = Record<string, ResumeSection>;
 
@@ -55,6 +57,10 @@ export const useResumeData = create<ResumeData>((set) => {
         'language' : {
           type: 'language',
           languages: []
+        },
+        'project' : {
+          type: 'project',
+          projects: []
         }
       },
       updateResumeData: (newSectionData) => set((state) => {
@@ -106,6 +112,13 @@ export const useResumeData = create<ResumeData>((set) => {
               sections: {
                 ...state.sections,
                 'language': {...newSectionData}
+              }
+            }
+          case 'project':
+            return {
+              sections: {
+                ...state.sections,
+                'project': {...newSectionData}
               }
             }
           default:

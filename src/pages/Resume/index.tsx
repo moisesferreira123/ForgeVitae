@@ -1,4 +1,4 @@
-import { ArrowLeft, Brain, BriefcaseBusiness, Earth, FileText, GraduationCap, User } from "lucide-react";
+import { ArrowLeft, Brain, BriefcaseBusiness, FileText, FolderOpen, GraduationCap, Languages, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionSidebar from "../../components/SectionsSidebar";
 import { useState } from "react";
@@ -39,8 +39,13 @@ const INITIAL_SECTION: SectionItem[] = [
   {
     id: 5,
     label: 'Idiomas',
-    icon: Earth,
+    icon: Languages,
   },
+  {
+    id: 6,
+    label: 'Projetos',
+    icon: FolderOpen,
+  }
 ]
 
 export default function Resume() {

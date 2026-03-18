@@ -1,7 +1,12 @@
+interface LinkInfo {
+  value: string;
+  url: string
+}
+
 export interface Project {
   name: string;
   technologies: string[];
-  links: string[]
+  links: LinkInfo[]
   startMonth: string;
   startYear: string
   endMonth: string;

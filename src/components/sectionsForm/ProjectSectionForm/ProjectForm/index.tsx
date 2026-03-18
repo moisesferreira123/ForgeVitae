@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { useResumeData } from "../../../../store/resumeData";
-import type { Project, ProjectSection } from "../../../../types/projectType";
+import type { ProjectSection } from "../../../../types/projectType";
 import Label from "../../../Label";
 import Input from "../../../Input";
-import { Plus } from "lucide-react";
+import { Link, Plus, Trash2 } from "lucide-react";
 import Technology from "../Technology";
+import LinkModal from "../../../modals/LinkModal";
+import { useLinkModal } from "../../../../store/modalStore";
+import DataPickerButton from "../../../DataPickerButton";
+import Months from "../../../Months";
+import Years from "../../../Years";
+import TextEditor from "../../../TextEditor";
 
 interface ProjectFormProps {
   projectIndex: number;
@@ -13,6 +19,7 @@ interface ProjectFormProps {
 
 export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFormProps) {
   const resumeData = useResumeData();
+  const linkModal = useLinkModal();
   const [startMonth, setStartMonth] = useState((resumeData.sections['experience'] as ProjectSection).projects[projectIndex].startMonth || '');
   const [startYear, setStartYear] = useState((resumeData.sections['experience'] as ProjectSection).projects[projectIndex].startYear || '');
   const [endMonth, setEndMonth] = useState((resumeData.sections['experience'] as ProjectSection).projects[projectIndex].endMonth || '');
@@ -25,6 +32,12 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
     const newProject = {...(resumeData.sections['project'] as ProjectSection)};
     if(inputName === 'name') newProject.projects[projectIndex].name = event.target.value;
     if(inputName === 'technologies') setCurrentTech(event.target.value);
+    resumeData.updateResumeData(newProject);
+  }
+
+  function onChangeLinkValue(linkIndex: number, event: React.ChangeEvent<HTMLInputElement>) {
+    const newProject = {...(resumeData.sections['project'] as ProjectSection)};
+    newProject.projects[projectIndex].links[linkIndex].value = event.target.value;
     resumeData.updateResumeData(newProject);
   }
 
@@ -117,6 +130,43 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
     resumeData.updateResumeData(newProject);
   }
 
+  function save(e: React.SubmitEvent<HTMLFormElement>, link: string | undefined) {
+    e.preventDefault();
+
+    if(link === undefined) return;
+
+    let url = link;
+
+    if(url !== '' && !(/^https?:\/\//i.test(url))) {
+      url = `https://${url}`;
+    }
+
+    const newResumeData = {...resumeData};
+    (newResumeData.sections['project'] as ProjectSection).projects[projectIndex].links[Number.parseInt(linkModal.id as string)].url = url;
+    resumeData.updateResumeData(newResumeData.sections['project']);
+    linkModal.updateModal();
+  }
+
+  function openModal() {
+    if(linkModal.updateIdModal) linkModal.updateIdModal(projectIndex.toString());
+    linkModal.updateModal();
+  }
+
+  function addLink() {
+    const newProject = resumeData.sections['project'] as ProjectSection;
+    newProject.projects[projectIndex].links.push({
+      value: '',
+      url: ''
+    });
+    resumeData.updateResumeData(newProject);
+  }
+
+  function removeLink(indexLink: number) {
+    const newProject = resumeData.sections['project'] as ProjectSection;
+    newProject.projects[projectIndex].links.splice(indexLink, 1);
+    resumeData.updateResumeData(newProject);
+  }
+
   return (
     <div className="space-y-5">
       <div className="space-y-2">
@@ -145,30 +195,64 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
             disabled={(/^<p>(\s*)<\/p>$/).test(currentTech) || currentTech === ''}
             onClick={addTechnology}
           >
-            <Plus size={18} />
+            <Plus size={16} />
           </button>
         </div>
         {/* TODO: Fazer o design das tecnologias e o drag and drop */}
         {(resumeData.sections['project'] as ProjectSection).projects[projectIndex].technologies.length !== 0 && 
           (resumeData.sections['project'] as ProjectSection).projects[projectIndex].technologies.map((technology, index) => (
             <Technology
-              key={index}
+              key={`technology-${index}`}
               technology={technology}
               position={index}
             />
           ))
         }
       </div>
-      <div className="space-y-2">
-        <Label id="location" value="Localização" />
-        <Input 
-          id="location"
-          type="text"
-          placeholder="Cidade, Estado"
-          value={(resumeData.sections['experience'] as ProjectSection).experiences[projectIndex].location}
-          onChange={event => onChange('location', event)}
-        />
-      </div>
+      {(resumeData.sections['project'] as ProjectSection).projects[projectIndex].links.length !== 0 &&
+      (resumeData.sections['project'] as ProjectSection).projects[projectIndex].links.map((link, index) => (
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <Label id={`link-${index+1}`} value={`Link ${index+1}`} />
+            <button
+              onClick={() => removeLink(index)}
+              className="flex justify-center items-center gap-1.5 text-(--destructive) hover:text-red-500 cursor-pointer"
+            >
+              <Trash2 size={12} />
+              <span className="text-xs">Remover</span>
+            </button>
+          </div>
+          <div className="w-full relative flex items-center">
+            <Input 
+              id={`link-${index+1}`}
+              type="text"
+              placeholder="Github, LiveSite, etc..."
+              value={link.value}
+              onChange={event => onChangeLinkValue(index, event)}
+            />
+            <button 
+              onClick={openModal}
+              className="link absolute right-2 h-6 px-2 rounded-md bg-(--muted) border border-(--border) cursor-pointer hover:text-(--primary)"
+            >
+              <Link size={16} />
+            </button>
+            {linkModal.isOpen && linkModal.id === index.toString() && 
+              <LinkModal 
+                linkName={`Link do ${link.value}`}
+                linkURL={link.url}
+                save={(event) => save(event, link.url) }
+              />
+            }
+          </div>
+        </div>
+      ))}
+      <button
+        onClick={addLink}
+        className="w-full flex justify-center items-center text-(--primary) font-medium text-sm gap-2 py-2.5 transition-colors duration-200 border-2 border-dashed border-(--primary)/30 rounded-lg bg-(--background) mt-8 hover:bg-(--primary)/5 hover:border-(--primary)/50 hover:text-(--foreground) cursor-pointer"
+      >
+        <Plus size={16} />
+        <span>Adicionar Link</span>
+      </button>
       <div className="grid grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label id="start-date" value="Data de Início" />
@@ -266,10 +350,10 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
       <div className="space-y-2">
         <Label id="description" value="Descrição" />
         <TextEditor 
-          placeholder="Descreva suas responsabilidades e principais conquistas..." 
+          placeholder="Descreva o que foi desenvolvido, funcionalidades e resultados..." 
           minHeight={180} 
           updateData={html => updateData(html)} 
-          initialContent={(resumeData.sections['experience'] as ProjectSection).experiences[projectIndex].description}
+          initialContent={(resumeData.sections['project'] as ProjectSection).projects[projectIndex].description}
         />
       </div>
       <button 

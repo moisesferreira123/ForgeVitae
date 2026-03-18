@@ -1,31 +1,17 @@
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLinkModal } from "../../../store/modalStore";
-import { useResumeData } from "../../../store/resumeData";
-import type { ProfileSection } from "../../../types/profileTypes";
 
-export default function LinkModal({linkId, linkName} : {linkId: string, linkName: string}) {
+interface LinkModalProps {
+  linkName: string;
+  linkURL: string | undefined;
+  save: (e: React.SubmitEvent<HTMLFormElement>, link: string | undefined) => void;
+}
+
+export default function LinkModal({linkName, linkURL, save} : LinkModalProps) {
   const linkModal = useLinkModal();
-  const resumeData = useResumeData();
-  const [link, setLink] = useState((resumeData.sections['profile'] as ProfileSection).fields[linkId].link);
+  const [link, setLink] = useState(linkURL);
   const modalRef = useRef<HTMLDivElement>(null);
-
-  function save(e: React.SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    if(link === undefined) return;
-
-    let url = link;
-
-    if(url !== '' && !(/^https?:\/\//i.test(url))) {
-      url = `https://${url}`;
-    }
-
-    const newResumeData = {...resumeData};
-    (newResumeData.sections['profile'] as ProfileSection).fields[linkId].link = url;
-    resumeData.updateResumeData(newResumeData.sections['profile']);
-    linkModal.updateModal();
-  }
 
   useEffect(() => {
     function handleCLickOutside(event: MouseEvent) {
@@ -51,10 +37,10 @@ export default function LinkModal({linkId, linkName} : {linkId: string, linkName
       className="absolute z-20 right-0 bottom-11 p-3 bg-(--popover) border border-(--primary)/20 rounded-lg w-75"
     >
       <form 
-        onSubmit={(e) => save(e)}
+        onSubmit={(e) => save(e, link)}
         className="flex flex-col gap-3 text-(--foreground)"
       >
-        <span className="text-sm font-medium">Link do {linkName}</span>
+        <span className="text-sm font-medium">{linkName}</span>
         <input 
           type="text"
           value={link}

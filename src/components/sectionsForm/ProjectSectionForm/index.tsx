@@ -3,7 +3,7 @@ import HeaderForm from "../../HeaderForm";
 import { useResumeData } from "../../../store/resumeData";
 import { useState } from "react";
 import type { Project, ProjectSection } from "../../../types/projectType";
-import type { DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 import ProjectForm from "./ProjectForm";
 
 export default function ProjectsSectionForm() {
@@ -64,16 +64,17 @@ export default function ProjectsSectionForm() {
         /> 
         :
         <div className="space-y-6">
-          {(resumeData.sections['experience'] as ProjectSection).projects.length !== 0 ? 
+          {(resumeData.sections['project'] as ProjectSection).projects.length !== 0 ? 
             <DragDropContext onDragEnd={reorder} >
-              <Droppable droppableId="experience" type="list" direction="vertical" >
+              <Droppable droppableId="project" type="list" direction="vertical" >
                 {(provided) => ( 
                   <div 
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                     className="flex flex-col gap-2 w-full text-center py-4"
                   >
-                    {(resumeData.sections['experience'] as ProjectSection).projects.map((experience, index) => (
+                    {/* TODO: Começar aqui */}
+                    {(resumeData.sections['project'] as ProjectSection).projects.map((project, index) => (
                       <ExperienceComp 
                         key={index}
                         experience={experience}

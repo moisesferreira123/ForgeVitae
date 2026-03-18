@@ -34,6 +34,23 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
     if(linkModal.updateIdModal) linkModal.updateIdModal(id);
     linkModal.updateModal();
   }
+
+  function save(e: React.SubmitEvent<HTMLFormElement>, link: string | undefined) {
+    e.preventDefault();
+
+    if(link === undefined) return;
+
+    let url = link;
+
+    if(url !== '' && !(/^https?:\/\//i.test(url))) {
+      url = `https://${url}`;
+    }
+
+    const newResumeData = {...resumeData};
+    (newResumeData.sections['profile'] as ProfileSection).fields[id].link = url;
+    resumeData.updateResumeData(newResumeData.sections['profile']);
+    linkModal.updateModal();
+  }
   
   if(!profileInfoInput.isDraggable) return (
     <div className="space-y-2">
@@ -103,7 +120,11 @@ export default function SectionInput({id, profileInfoInput, position, value, onC
                 </button>
               }
               {linkModal.isOpen && linkModal.id === id && 
-                <LinkModal linkId={id} linkName={profileInfoInput.label} />
+                <LinkModal 
+                  linkName={`Link do ${profileInfoInput.label}`}
+                  linkURL={(resumeData.sections["profile"] as ProfileSection).fields[id].link}
+                  save={(e, link) => save(e, link)}
+                />
               }
             </div>
             <div 

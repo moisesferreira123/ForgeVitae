@@ -1,10 +1,11 @@
-import { FolderOpen } from "lucide-react";
+import { FolderOpen, Plus } from "lucide-react";
 import HeaderForm from "../../HeaderForm";
 import { useResumeData } from "../../../store/resumeData";
 import { useState } from "react";
 import type { Project, ProjectSection } from "../../../types/projectType";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 import ProjectForm from "./ProjectForm";
+import ProjectComp from "./ProjectComp";
 
 export default function ProjectsSectionForm() {
   const resumeData = useResumeData();
@@ -27,7 +28,7 @@ export default function ProjectsSectionForm() {
     setProjectIndex((resumeData.sections['project'] as ProjectSection).projects.length-1);
   }
 
-  function removeExperience(e: React.MouseEvent, position: number) {
+  function removeProject(e: React.MouseEvent, position: number) {
     e.stopPropagation();
     const filteredProjects = [...(resumeData.sections['project'] as ProjectSection).projects];
     filteredProjects.splice(position, 1);
@@ -73,14 +74,13 @@ export default function ProjectsSectionForm() {
                     {...provided.droppableProps}
                     className="flex flex-col gap-2 w-full text-center py-4"
                   >
-                    {/* TODO: Começar aqui */}
                     {(resumeData.sections['project'] as ProjectSection).projects.map((project, index) => (
-                      <ExperienceComp 
-                        key={index}
-                        experience={experience}
+                      <ProjectComp 
+                        key={`project-${index}`}
+                        project={project}
                         position={index}
-                        openExperienceUpdate={() => setProjectIndex(index)}
-                        removeExperience={(e) => removeExperience(e, index)}
+                        openProjectUpdate={() => setProjectIndex(index)}
+                        removeProject={(e) => removeProject(e, index)}
                       />
                     ))}
                     {provided.placeholder}
@@ -89,14 +89,14 @@ export default function ProjectsSectionForm() {
               </Droppable>
             </DragDropContext>
             : 
-            <div className="w-full text-center border-y border-(--border) py-4 text-(--muted-foreground)">Adicione uma experiência</div>
+            <div className="w-full text-center border-y border-(--border) py-4 text-(--muted-foreground)">Adicione um projeto</div>
           }
           <button 
             className="flex h-10 w-full justify-center items-center gap-2 text-(--foreground) bg-(--primary) rounded-lg text-sm font-medium transition-colors duration-200 enabled:hover:bg-(--primary)/90 cursor-pointer"
             onClick={addProject}
           >
             <Plus size={18} />
-            <span>Adicionar experiência</span>
+            <span>Adicionar projeto</span>
           </button>
         </div>
       }

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { ExperienceSection } from "../../../../types/experienceTypes";
 import { useResumeData } from "../../../../store/resumeData";
-import Input from "../../../Input";
-import Label from "../../../Label";
+import Input from "../../../ui/Input";
+import Label from "../../../ui/Label";
 import Months from "../../../Months";
-import DataPickerButton from "../../../DataPickerButton";
+import DataPickerButton from "../../../ui/DataPickerButton";
 import Years from "../../../Years";
 import TextEditor from "../../../TextEditor";
 
@@ -107,7 +107,7 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
 
   return (
     <div className="space-y-5">
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="job-title" value="Título do Cargo" />
         <Input 
           id="job-title"
@@ -117,7 +117,7 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
           onChange={event => onChange('job-title', event)}
         />
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="employer" value="Empregador" />
         <Input 
           id="employer"
@@ -127,7 +127,7 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
           onChange={event => onChange('employer', event)}
         />
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="location" value="Localização" />
         <Input 
           id="location"
@@ -138,7 +138,7 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
         />
       </div>
       <div className="grid grid-cols-2 gap-6">
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <Label id="start-date" value="Data de Início" />
           <div className="grid grid-cols-2 gap-1">
             <div className="relative">
@@ -177,7 +177,7 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
             </div>
           </div>
         </div>
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <div className="flex justify-between items-center">
             <Label id="end-date" value="Data de Fim" />
             <div className="flex items-center gap-2 relative mr-1">
@@ -231,7 +231,7 @@ export default function ExperienceForm({experienceIndex, closeExperienceForm}: E
           </div>
         </div>
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="description" value="Descrição" />
         <TextEditor 
           placeholder="Descreva suas responsabilidades e principais conquistas..." 

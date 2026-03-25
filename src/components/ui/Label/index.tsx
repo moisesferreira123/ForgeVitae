@@ -5,6 +5,6 @@ interface LabelProps {
 
 export default function Label({id, value} : LabelProps) {
   return (
-    <label htmlFor={id} className="ml-1 text-sm font-medium flex items-center">{value}</label>
+    <label htmlFor={id} className="ml-1 text-sm font-medium  self-start">{value}</label>
   );
 }

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useResumeData } from "../../../../store/resumeData";
 import type { ProjectSection } from "../../../../types/projectType";
-import Label from "../../../Label";
-import Input from "../../../Input";
+import Label from "../../../ui/Label";
+import Input from "../../../ui/Input";
 import { Link, Plus, Trash2 } from "lucide-react";
 import Technology from "../Technology";
 import LinkModal from "../../../modals/LinkModal";
 import { useLinkModal } from "../../../../store/modalStore";
-import DataPickerButton from "../../../DataPickerButton";
+import DataPickerButton from "../../../ui/DataPickerButton";
 import Months from "../../../Months";
 import Years from "../../../Years";
 import TextEditor from "../../../TextEditor";
@@ -20,10 +20,10 @@ interface ProjectFormProps {
 export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFormProps) {
   const resumeData = useResumeData();
   const linkModal = useLinkModal();
-  const [startMonth, setStartMonth] = useState((resumeData.sections['experience'] as ProjectSection).projects[projectIndex].startMonth || '');
-  const [startYear, setStartYear] = useState((resumeData.sections['experience'] as ProjectSection).projects[projectIndex].startYear || '');
-  const [endMonth, setEndMonth] = useState((resumeData.sections['experience'] as ProjectSection).projects[projectIndex].endMonth || '');
-  const [endYear, setEndYear] = useState((resumeData.sections['experience'] as ProjectSection).projects[projectIndex].endYear || '');
+  const [startMonth, setStartMonth] = useState((resumeData.sections['project'] as ProjectSection).projects[projectIndex].startMonth || '');
+  const [startYear, setStartYear] = useState((resumeData.sections['project'] as ProjectSection).projects[projectIndex].startYear || '');
+  const [endMonth, setEndMonth] = useState((resumeData.sections['project'] as ProjectSection).projects[projectIndex].endMonth || '');
+  const [endYear, setEndYear] = useState((resumeData.sections['project'] as ProjectSection).projects[projectIndex].endYear || '');
   const [dateModal, setDateModal] = useState('');
   const [isCurrent, setIsCurrent] = useState(false);
   const [currentTech, setCurrentTech] = useState('');
@@ -140,15 +140,15 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
     if(url !== '' && !(/^https?:\/\//i.test(url))) {
       url = `https://${url}`;
     }
-
+    console.log(url, linkModal.id)
     const newResumeData = {...resumeData};
     (newResumeData.sections['project'] as ProjectSection).projects[projectIndex].links[Number.parseInt(linkModal.id as string)].url = url;
     resumeData.updateResumeData(newResumeData.sections['project']);
     linkModal.updateModal();
   }
 
-  function openModal() {
-    if(linkModal.updateIdModal) linkModal.updateIdModal(projectIndex.toString());
+  function openModal(index: string) {
+    if(linkModal.updateIdModal) linkModal.updateIdModal(index);
     linkModal.updateModal();
   }
 
@@ -169,7 +169,7 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
 
   return (
     <div className="space-y-5">
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="name" value="Nome do Projeto" />
         <Input 
           id="name"
@@ -179,7 +179,7 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
           onChange={event => onChange('name', event)}
         />
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="technologies" value="Tecnologias Utilizadas" />
         <div className="flex items-center gap-2">
           <Input 
@@ -191,7 +191,7 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
             onKeyDown={event => handleKeyDown(event)}
           />
           <button 
-            className="flex h-10 w-10 justify-center items-center gap-2 text-(--foreground) bg-(--primary) rounded-lg text-sm font-medium transition-colors duration-200 enabled:hover:bg-(--primary)/90 enabled:cursor-pointer disabled:opacity-50 disabled:cursor-default"
+            className="flex h-10 w-10 shrink-0 justify-center items-center gap-2 text-(--foreground) bg-(--primary) rounded-lg text-sm font-medium transition-colors duration-200 enabled:hover:bg-(--primary)/90 enabled:cursor-pointer disabled:opacity-50 disabled:cursor-default"
             disabled={(/^<p>(\s*)<\/p>$/).test(currentTech) || currentTech === ''}
             onClick={addTechnology}
           >
@@ -211,7 +211,7 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
       </div>
       {(resumeData.sections['project'] as ProjectSection).projects[projectIndex].links.length !== 0 &&
       (resumeData.sections['project'] as ProjectSection).projects[projectIndex].links.map((link, index) => (
-        <div className="space-y-2">
+        <div key={`link-project-${index}`} className="flex flex-col gap-2">
           <div className="flex justify-between items-center">
             <Label id={`link-${index+1}`} value={`Link ${index+1}`} />
             <button
@@ -231,16 +231,16 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
               onChange={event => onChangeLinkValue(index, event)}
             />
             <button 
-              onClick={openModal}
+              onClick={() => openModal(index.toString())}
               className="link absolute right-2 h-6 px-2 rounded-md bg-(--muted) border border-(--border) cursor-pointer hover:text-(--primary)"
             >
               <Link size={16} />
             </button>
             {linkModal.isOpen && linkModal.id === index.toString() && 
               <LinkModal 
-                linkName={`Link do ${link.value}`}
+                linkName={`Link ${index+1}`}
                 linkURL={link.url}
-                save={(event) => save(event, link.url) }
+                save={(event, link) => save(event, link) }
               />
             }
           </div>
@@ -254,7 +254,7 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
         <span>Adicionar Link</span>
       </button>
       <div className="grid grid-cols-2 gap-6">
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <Label id="start-date" value="Data de Início" />
           <div className="grid grid-cols-2 gap-1">
             <div className="relative">
@@ -293,13 +293,13 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
             </div>
           </div>
         </div>
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <div className="flex justify-between items-center">
             <Label id="end-date" value="Data de Fim" />
             <div className="flex items-center gap-2 relative mr-1">
-              <Label id="current-experience" value="Atual" />
+              <Label id="current-project" value="Atual" />
               <input 
-                id="current-experience"
+                id="current-project"
                 type="checkbox" 
                 className="peer appearance-none w-3 h-3 rounded-full border border-(--foreground)
                checked:bg-(--primary) transition-all duration-200 outline-none mt-0.5 cursor-pointer "
@@ -347,7 +347,7 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
           </div>
         </div>
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="description" value="Descrição" />
         <TextEditor 
           placeholder="Descreva o que foi desenvolvido, funcionalidades e resultados..." 

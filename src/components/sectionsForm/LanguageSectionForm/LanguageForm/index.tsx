@@ -1,11 +1,11 @@
 import { useResumeData } from "../../../../store/resumeData";
 import type { LanguageSection } from "../../../../types/languageTypes";
-import Label from "../../../Label";
-import Input from "../../../Input";
+import Label from "../../../ui/Label";
+import Input from "../../../ui/Input";
 import TextEditor from "../../../TextEditor";
 import OpenDropDownButton from "../../../OpenDropDownButton";
 import { useState } from "react";
-import DropDown from "../../../DropDown";
+import DropDown from "../../../ui/DropDown";
 
 interface LanguageFormProps {
   languageIndex: number;
@@ -48,7 +48,7 @@ export default function LanguageForm({languageIndex, closeLanguageForm}: Languag
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-5 gap-2">
-        <div className="space-y-2 col-span-3">
+        <div className="flex flex-col gap-2 col-span-3">
           <Label id="language" value="Idioma" />
           <Input 
             id="language"
@@ -58,7 +58,7 @@ export default function LanguageForm({languageIndex, closeLanguageForm}: Languag
             onChange={event => onChange(event)}
           />
         </div>
-        <div className="space-y-2 col-span-2">
+        <div className="flex flex-col gap-2 col-span-2">
           <Label id="level" value="Nível" />
           <div className="relative">
             <OpenDropDownButton
@@ -77,7 +77,7 @@ export default function LanguageForm({languageIndex, closeLanguageForm}: Languag
           </div>
         </div>
       </div>
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         <Label id="description" value="Detalhes adicionais" />
         <TextEditor 
           placeholder="Adicione certificações ou detalhes (ex: TOEFL, IELTS, intercâmbio...)" 

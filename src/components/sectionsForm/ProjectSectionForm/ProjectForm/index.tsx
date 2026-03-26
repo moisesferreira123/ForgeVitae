@@ -44,7 +44,6 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if(e.key === 'Enter') {
       addTechnology();
-      setCurrentTech('');
     }
   }
 
@@ -52,6 +51,13 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
     if(!currentTech.trim()) return;
     const newProject = {...(resumeData.sections['project'] as ProjectSection)};
     newProject.projects[projectIndex].technologies.push(currentTech.trim());
+    resumeData.updateResumeData(newProject);
+    setCurrentTech('');
+  }
+
+  function removeTechnology(position: number) {
+    const newProject = {...(resumeData.sections['project'] as ProjectSection)};
+    newProject.projects[projectIndex].technologies.splice(position, 1);
     resumeData.updateResumeData(newProject);
   }
 
@@ -198,16 +204,18 @@ export default function ProjectForm({projectIndex, closeProjectForm}: ProjectFor
             <Plus size={16} />
           </button>
         </div>
-        {/* TODO: Fazer o design das tecnologias e o drag and drop */}
-        {(resumeData.sections['project'] as ProjectSection).projects[projectIndex].technologies.length !== 0 && 
-          (resumeData.sections['project'] as ProjectSection).projects[projectIndex].technologies.map((technology, index) => (
-            <Technology
-              key={`technology-${index}`}
-              technology={technology}
-              position={index}
-            />
-          ))
-        }
+        <div className="flex gap-2 flex-wrap mt-1">
+          {(resumeData.sections['project'] as ProjectSection).projects[projectIndex].technologies.length !== 0 && 
+            (resumeData.sections['project'] as ProjectSection).projects[projectIndex].technologies.map((technology, index) => (
+              <Technology
+                key={`technology-${index}`}
+                technology={technology}
+                position={index}
+                onRemoveTechnology={(position) => removeTechnology(position)}
+              />
+            ))
+          }
+        </div>
       </div>
       {(resumeData.sections['project'] as ProjectSection).projects[projectIndex].links.length !== 0 &&
       (resumeData.sections['project'] as ProjectSection).projects[projectIndex].links.map((link, index) => (

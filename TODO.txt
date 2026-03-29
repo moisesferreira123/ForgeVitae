@@ -5,4 +5,6 @@ TODO: Vou ter que colocar depois para as seções nos resumeData iniciarem com o
 TODO: Fazer a animação do editor de atualização das habilidades descendo
 TODO: Colocar a parte de edição em habilidades para as pessoas poderem editar se querem as habilidades aparecendo em tópicos, separado por vírgula, etc
 TODO: Colocar modal de deleção de habilidades, experiência, projetos, idiomas, etc...
-TODO: Criar uma função para retornar uma string com a data da forma escolhida na parte de experiência e Educação (talvem em projetos).
+TODO: Criar uma função para retornar uma string com a data da forma escolhida na parte de experiência, Educação e projetos.
+TODO: Fazer com que as datas da parte de educação e Experiência não apareçam quando estão vazias (como na parte de projetos)
+TODO: Criar um botão de voltar na parte de experiência, idiomas, projetos e educação para facilitar a volta para parte de lista dessas coisas

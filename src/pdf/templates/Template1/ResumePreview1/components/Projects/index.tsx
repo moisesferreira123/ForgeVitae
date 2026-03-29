@@ -15,7 +15,7 @@ export default function Projects() {
               <div className="flex flex-col flex-wrap text-[10pt] font-normal break-all w-[80%]">
                 <span className="font-bold">{project.name}</span> 
                 <span className="flex flex-wrap gap-1"> 
-                  <span className="font-bold">Tecnologias Utilizadas:</span>
+                  {project.technologies.length !== 0 && <span className="font-bold">Tecnologias Utilizadas:</span>}
                   {project.technologies.length !== 0 && project.technologies.map((technology, index) => (
                     <span key={`${technology}-pdf-${index}`} className="wrap-break-word">{`${technology}${project.technologies.length !== index+1 ? ',':''}`}</span>
                   ))}

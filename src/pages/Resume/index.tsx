@@ -8,7 +8,9 @@ import ResumePreview1 from "../../pdf/templates/Template1/ResumePreview1";
 import { PDFViewer } from "@react-pdf/renderer";
 import { ResumePDF1 } from "../../pdf/templates/Template1/ResumePDF1";
 import AddProfileInfoModal from "../../components/modals/AddProfileInfoModal";
-import { useAddProfileInfoModal } from "../../store/modalStore";
+import { useAddProfileInfoModal, useAddSectionModal } from "../../store/modalStore";
+import Button from "../../components/ui/Button";
+import AddSectionModal from "../../components/modals/AddSectionModal";
 
 const INITIAL_SECTION: SectionItem[] = [
   {
@@ -52,11 +54,13 @@ export default function Resume() {
   const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
   const [activedSectionId, setActivedSectionId] = useState<number>(0);
   const isAddProfileInfoModalOpen = useAddProfileInfoModal().isOpen;
+  const addSectionModal = useAddSectionModal();
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
       {isAddProfileInfoModalOpen && <AddProfileInfoModal />}
-      <aside className="min-h-screen h-full w-64 bg-(--sidebar-background) border-r border-(--sidebar-border) p-6">
+      {addSectionModal.isOpen && <AddSectionModal />}
+      <aside className="relative min-h-screen h-full w-70 bg-(--sidebar-background) border-r border-(--sidebar-border) p-6">
         <Link
           to={'/'}
           className="flex items-center gap-1 text-(--muted-foreground) text-sm w-17 hover:text-(--foreground) transition-colors mb-4"
@@ -64,7 +68,7 @@ export default function Resume() {
           <ArrowLeft size={16} />
           <span>Voltar</span>
         </Link>
-        <div className="flex items-center text-(--foreground) gap-3 mb-8">
+        <div className="flex items-center text-(--foreground) gap-3 pb-5 border-b border-b-(--border)">
           <div className="flex justify-center items-center bg-linear-to-br from-(--primary) to-(--accent) rounded-xl w-10 h-10">
             <FileText size={20} />
           </div>
@@ -78,6 +82,13 @@ export default function Resume() {
           activedSectionId={activedSectionId}
           onSelectSection={(sectionId: number) => setActivedSectionId(sectionId)}
         />
+        <div className="absolute z-10 w-full bottom-0 left-0 px-6 py-6 bg-(--sidebar-background) rounded-t-2xl border-t border-(--border)">
+          {/* Colocar a função de adicionar */}
+          <Button
+            text="Adicionar Seção"
+            onClickButton={() => addSectionModal.updateModal()}
+          />
+        </div>
       </aside>
       <main className="flex-1 justify-center p-8 overflow-y-auto no-scrollbar">
         <div className="max-w-xl p-8 rounded-2xl bg-(--card)/70 border border-white/10 shadow-2xl text-(--foreground)">

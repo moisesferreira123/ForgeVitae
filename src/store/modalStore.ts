@@ -24,3 +24,10 @@ export const useLinkModal = create<Modal>((set) => ({
     id: id
   }))
 }))
+
+export const useAddSectionModal = create<Modal>((set) => ({
+  isOpen: false,
+  updateModal: () => set((state) => ({
+    isOpen: !state.isOpen
+  }))
+}))

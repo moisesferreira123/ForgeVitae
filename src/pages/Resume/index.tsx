@@ -1,8 +1,7 @@
-import { ArrowLeft, Brain, BriefcaseBusiness, FileText, FolderOpen, GraduationCap, Languages, User } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import SectionSidebar from "../../components/SectionsSidebar";
 import { useState } from "react";
-import type { SectionItem } from "../../types/sectionItem";
 import SectionRenderer from "../../components/SectionRenderer";
 import ResumePreview1 from "../../pdf/templates/Template1/ResumePreview1";
 import { PDFViewer } from "@react-pdf/renderer";
@@ -11,47 +10,10 @@ import AddProfileInfoModal from "../../components/modals/AddProfileInfoModal";
 import { useAddProfileInfoModal, useAddSectionModal } from "../../store/modalStore";
 import Button from "../../components/ui/Button";
 import AddSectionModal from "../../components/modals/AddSectionModal";
-
-const INITIAL_SECTION: SectionItem[] = [
-  {
-    id: 0,
-    label: 'Pessoal',
-    icon: User,
-  },
-  {
-    id: 1,
-    label: 'Resumo',
-    icon: FileText,
-  },
-  {
-    id: 2,
-    label: 'Habilidades',
-    icon: Brain,
-  },
-  {
-    id: 3,
-    label: 'Experiência',
-    icon: BriefcaseBusiness,
-  },
-  {
-    id: 4,
-    label: 'Formação Acadêmica',
-    icon: GraduationCap,
-  },
-  {
-    id: 5,
-    label: 'Idiomas',
-    icon: Languages,
-  },
-  {
-    id: 6,
-    label: 'Projetos',
-    icon: FolderOpen,
-  }
-]
+import { useSectionsStore } from "../../store/sectionsStore";
 
 export default function Resume() {
-  const [sectionsList, setSectionsList] = useState<SectionItem[]>(INITIAL_SECTION);
+  const sectionsStore = useSectionsStore();
   const [activedSectionId, setActivedSectionId] = useState<number>(0);
   const isAddProfileInfoModalOpen = useAddProfileInfoModal().isOpen;
   const addSectionModal = useAddSectionModal();
@@ -78,7 +40,7 @@ export default function Resume() {
           </div>
         </div>
         <SectionSidebar 
-          sectionsList={sectionsList}
+          sectionsList={sectionsStore.ids}
           activedSectionId={activedSectionId}
           onSelectSection={(sectionId: number) => setActivedSectionId(sectionId)}
         />

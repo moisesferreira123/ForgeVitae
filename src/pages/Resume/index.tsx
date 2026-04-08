@@ -10,10 +10,8 @@ import AddProfileInfoModal from "../../components/modals/AddProfileInfoModal";
 import { useAddProfileInfoModal, useAddSectionModal } from "../../store/modalStore";
 import Button from "../../components/ui/Button";
 import AddSectionModal from "../../components/modals/AddSectionModal";
-import { useSectionsStore } from "../../store/sectionsStore";
 
 export default function Resume() {
-  const sectionsStore = useSectionsStore();
   const [activedSectionId, setActivedSectionId] = useState<number>(0);
   const isAddProfileInfoModalOpen = useAddProfileInfoModal().isOpen;
   const addSectionModal = useAddSectionModal();
@@ -40,7 +38,6 @@ export default function Resume() {
           </div>
         </div>
         <SectionSidebar 
-          sectionsList={sectionsStore.ids}
           activedSectionId={activedSectionId}
           onSelectSection={(sectionId: number) => setActivedSectionId(sectionId)}
         />

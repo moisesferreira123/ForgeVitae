@@ -1,8 +1,15 @@
 import { GripVertical, Trash2 } from "lucide-react";
 import type { SectionItem } from "../../types/sectionItem";
+import { useSectionsStore } from "../../store/sectionsStore";
 
 export default function SectionNavItem( {sectionItem, isActive, onSelectSection} : {sectionItem: SectionItem, isActive: boolean, onSelectSection: (sectionId: number) => void}) {
   const {id, label, icon: Icon} = sectionItem;
+  const sectionsStore = useSectionsStore();
+
+  function removeSection(e: React.MouseEvent) {
+    e.stopPropagation();
+    sectionsStore.removeSection(id);
+  }
 
   return (
     <button
@@ -16,7 +23,10 @@ export default function SectionNavItem( {sectionItem, isActive, onSelectSection}
         <span className="font-medium text-sm text-start">{label}</span>
       </div>
       <div className="flex items-center gap-3 ">
-        <button className="z-10 hover:text-red-400 cursor-pointer">
+        <button 
+          onClick={removeSection}
+          className="z-10 hover:text-red-400 cursor-pointer"
+        >
           <Trash2 size={16} />
         </button>
         <div 

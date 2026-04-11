@@ -31,12 +31,13 @@ export default function AddProfileInfoModal() {
     <div 
       role="dialog"
       aria-modal="true"
+      aria-labelledby="add-profile-info-title"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-xs"
     >
       <div className="w-md h-[70vh] flex flex-col justify-between rounded-xl bg-(--background) border border-(--border) p-6">
         <div className="flex flex-col gap-2 flex-1">
           <div className="flex flex-col gap-1.5 flex-none">
-            <h2 className="tracking-tight text-xl font-bold text-(--foreground)">Informações Adicionais</h2>
+            <h2 id="add-profile-info-title" className="tracking-tight text-xl font-bold text-(--foreground)">Informações Adicionais</h2>
             <p className="text-sm text-(--muted-foreground)">Selecione os campos que deseja adicionar</p>
           </div>
           <div className="py-4 space-x-2 space-y-2 overflow-y-auto flex-1">

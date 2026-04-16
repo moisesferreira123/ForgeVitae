@@ -63,9 +63,9 @@ export default function Resume() {
             {/* TODO: Colocar botão de lupa para ver o pdf melhor (Pode implementar depois)*/}
           </button>
         </div>
-        {/* <PDFViewer style={{ width: '100%', height: 'calc(297mm*0.46)' }}>
+        <PDFViewer style={{ width: '100%', height: 'calc(297mm*0.46)' }}>
           <ResumePDF1 />
-        </PDFViewer> */}
+        </PDFViewer>
         <ResumePreview1 />
       </aside>
     </div>

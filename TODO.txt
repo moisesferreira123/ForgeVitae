@@ -8,3 +8,4 @@ TODO: Colocar modal de deleção de habilidades, experiência, projetos, idiomas
 TODO: Criar uma função para retornar uma string com a data da forma escolhida na parte de experiência, Educação e projetos.
 TODO: Fazer com que as datas da parte de educação e Experiência não apareçam quando estão vazias (como na parte de projetos)
 TODO: Criar um botão de voltar na parte de experiência, idiomas, projetos e educação para facilitar a volta para parte de lista dessas coisas
+TODO: Trocar fonte do preview para Helvetica

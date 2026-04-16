@@ -1,16 +1,16 @@
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
-// Criando os estilos (Equivalente ao seu Tailwind)
 const styles = StyleSheet.create({
   page: {
     padding: '15mm',
     backgroundColor: '#FFFFFF',
-    fontFamily: 'Helvetica', // React-pdf tem Helvetica por padrão
+    fontFamily: 'Helvetica',
     color: '#141414',
     display: 'flex',
     flexDirection: 'column',
+    gap: 3,
+    lineHeight: 1.25
   },
-  // HEADER
   header: {
     textAlign: 'center',
     marginBottom: 15,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
 });
 
 export const ResumePDF1 = () => (
-  <Document title="Currículo - Moisés Ferreira">
+  <Document title="Currículo">
     <Page size="A4" style={styles.page}>
       
       {/* HEADER */}

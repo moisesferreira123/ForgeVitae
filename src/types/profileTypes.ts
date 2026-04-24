@@ -4,6 +4,7 @@ export interface ProfileField {
   value: string;
   label: string;
   icon?: React.ElementType;
+  IconPDF?: React.ElementType;
   link?: string;
 }
 

@@ -1,4 +1,5 @@
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import Profile from './components/Profile';
 
 const styles = StyleSheet.create({
   page: {
@@ -109,21 +110,7 @@ export const ResumePDF1 = () => (
     <Page size="A4" style={styles.page}>
       
       {/* HEADER */}
-      <View style={styles.header}>
-        <Text style={styles.name}>Moisés Ferreira</Text>
-        <View style={styles.contactRow}>
-          <Text>(84) 99152-2678</Text>
-          <Text style={styles.separator}>|</Text>
-          <Text>moises.ferreira.118@ufrn.edu.br</Text>
-          <Text style={styles.separator}>|</Text>
-          <Text>Parnamirim, RN</Text>
-        </View>
-        <View style={[styles.contactRow, { marginTop: 2 }]}>
-          <Text style={styles.link}>github.com/moisesferreira123</Text>
-          <Text style={styles.separator}>|</Text>
-          <Text style={styles.link}>linkedin.com/in/moises-ferreira-099278334</Text>
-        </View>
-      </View>
+      <Profile />
 
       {/* HABILIDADES */}
       <View style={styles.section}>

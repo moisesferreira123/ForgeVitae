@@ -22,27 +22,18 @@ const styles = StyleSheet.create({
     columnGap: 9,
     flexWrap: 'wrap',
   },
-  // textIcon: {
-  //   flexGrow: 0,
-  //   flexShrink: 0,
-  //   flexBasis: 'auto',
-  // },
-  separator: {
-    color: '#9ca3af',
-  },
   info: {
     flexDirection: 'row',
     gap: 3,
-    borderRightWidth: 1.5,
-    borderRightColor: 'rgba(0, 0, 0, 0)',
-    borderRightStyle: 'solid',
+    fontSize: 10,
     textDecoration: 'none',
-    paddingRight: 9,
     minWidth: 0
   },
-  lastInfo: {
-    borderRightWidth: 0,
-    paddingRight: 0
+  separator: {
+    width: 1.5,
+    height: 10, 
+    backgroundColor: 'rgb(0, 0, 0)',
+    marginLeft: 6, 
   }
 })
 
@@ -69,10 +60,7 @@ export default function Profile() {
               <Link 
                 key={`${key}-pdf`} 
                 src={data.fields[key].link}
-                style={[
-                  styles.info,
-                  styles.lastInfo
-                ]}
+                style={styles.info}
               >
                 {Icon && <Icon />}
                 <Text>{data.fields[key].value}</Text>
@@ -83,22 +71,18 @@ export default function Profile() {
               <Link 
                 key={`${key}-pdf`}  
                 src={data.fields[key].link}
-                style={[
-                  styles.info,
-                ]}
+                style={styles.info}
               >
                 {Icon && <Icon />}
                 <Text>{data.fields[key].value}</Text>
+                {!isLast && <View style={styles.separator} />}
               </Link>
             );
           }
 
           if(isLast) return (
             <View key={`${key}-pdf`} 
-              style={[
-                styles.info,
-                styles.lastInfo
-              ]}
+              style={styles.info}
             >
               {Icon && <Icon />}
               <Text>{data.fields[key].value}</Text>
@@ -109,6 +93,7 @@ export default function Profile() {
             <View key={`${key}-pdf`}  style={styles.info}>
               {Icon && <Icon />}
               <Text>{data.fields[key].value}</Text>
+              {!isLast && <View style={styles.separator} />}
             </View>
           );
         })}
